@@ -1,0 +1,128 @@
+version: '3.3'
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false
+
+services:
+  fenix_db:
+    image: mariadb:11
+    container_name: fenix_db
+    env_file:
+    - .env
+    restart: always
+    user: "1000"
+    environment:
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PASS}"
+      MYSQL_RANDOM_ROOT_PASSWORD: "1"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    labels:
+      - "traefik.enable=false" # Disable Traefik for this service
+    networks:
+      - internal
+
+  phpmyadmin:
+    container_name: fenix_db_admin
+    image: phpmyadmin/phpmyadmin
+    env_file:
+    - .env
+    ports:
+      - 9899:80
+    restart: always
+    user: "1000"
+    environment:
+      PMA_HOST: "${DB_HOST}"
+      PMA_USER: "${DB_USER}"
+      PMA_PASSWORD: "${DB_PASS}"
+      PMA_ARBITRARY: "1"
+    labels:
+      - "traefik.http.routers.fenix_phpmyadmin.rule=Host(`phpmyadmin.fenixnordic.solutions`)"
+      - "traefik.http.routers.fenix_phpmyadmin.tls=true"
+      - "traefik.http.routers.fenix_phpmyadmin.tls.certresolver=lets-encrypt"
+    networks:
+      - internal
+      - web
+    depends_on:
+      - fenix_db
+
+  drupal:
+    container_name: fenix_drupal
+    env_file:
+    - .env
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    restart: always
+    ports:
+      - 9898:80
+    working_dir: /opt/drupal
+    volumes:
+      - ./web:/opt/drupal/web
+      - ./composer.json:/opt/drupal/composer.json
+      - ./composer.lock:/opt/drupal/composer.lock
+      - ./settings.php:/opt/drupal/web/sites/default/settings.php
+      - ./config:/opt/drupal/config
+    environment:
+      COMPOSER_MEMORY_LIMIT: "2G"
+      WEBROOT_SITE: ${WEBROOT_SITE}
+      DOMAIN: ${DOMAIN_NAME}
+      TRUSTED_HOST_PATTERNS: ${TRUSTED_HOST_PATTERNS}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: 3306
+      HASH_SALT: ${HASH_SALT}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_PORT: 6379
+    labels:
+      - "traefik.http.routers.fenix_drupal.rule=Host(`fenixnordic.solutions`)"
+      - "traefik.http.routers.fenix_drupal.tls=true"
+      - "traefik.http.routers.fenix_drupal.tls.certresolver=lets-encrypt"
+      - "traefik.http.middlewares.fenix_drupal-www-https-redirect.redirectregex.permanent=true"
+      - "traefik.http.middlewares.fenix_drupal-secure-www-redirect.redirectregex.permanent=true"
+      - "traefik.http.middlewares.web-www-https-redirect.redirectregex.permanent=true"
+      - "traefik.http.routers.drupal.middlewares=web-www-https-redirect"
+    networks:
+      - internal
+      - web
+    depends_on:
+      - fenix_db
+      - fenix_redis
+
+  fenix_redis:
+    image: library/redis:latest
+    container_name: fenix_redis
+    volumes:
+      - ./data/redis:/data
+    command: ["redis-server"]
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 20s
+      retries: 10
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+  fenix_solr:
+    image: solr:8.11.2
+    container_name: fenix_solr
+    ports:
+     - "8883:8983"
+    volumes:
+      - ./data/solr:/var/solr
+      - ./solr/fenix:/opt/solr/server/solr/fenix
+    restart: unless-stopped
+    networks:
+      - internal
