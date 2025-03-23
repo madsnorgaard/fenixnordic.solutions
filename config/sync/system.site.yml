@@ -1,9 +1,9 @@
 _core:
   default_config_hash: ijfbzDTN4CbE7Sr-6ubWzy_t1vH4OtU1doNCLssVz-4
 langcode: en
-uuid: e27307de-e100-4a35-8807-9e14e7b66fc6
-name: Drupal
-mail: ''
+uuid: 341fc720-f708-4219-a152-4ef745323b2d
+name: 'Fenix Nordic Solutions'
+mail: me@fenixnordic.solutions
 slogan: ''
 page:
   403: ''
