@@ -1,4 +1,4 @@
-[![CI/CD Workflow](https://github.com/madsnorgaard/drupal11_docker_composer_drush/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/madsnorgaard/drupal11_docker_composer_drush/actions/workflows/main.yml)
+[![Deploy to Production](https://github.com/madsnorgaard/fenixnordic.solutions/actions/workflows/deploy.yml/badge.svg)](https://github.com/madsnorgaard/fenixnordic.solutions/actions/workflows/deploy.yml)
 
 # Project description
 This project includes Drupal 11, Drush 13, Composer install of Drupal Recommended Project and can be used to develop, stage or put into production any Drupal 11 project.
