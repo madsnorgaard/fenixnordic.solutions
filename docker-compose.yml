@@ -88,8 +88,6 @@ services:
   fenix_solr:
     image: solr:8.11.2
     container_name: fenix_solr
-    ports:
-     - "8983:8983"
     volumes:
       - ./data/solr:/var/solr
       - ./solr/fenix:/opt/solr/server/solr/fenix
