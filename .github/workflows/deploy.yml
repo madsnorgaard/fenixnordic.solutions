@@ -9,10 +9,6 @@ on:
         description: 'Force recreate containers'
         type: boolean
         default: false
-      run_updb:
-        description: 'Run drush updb'
-        type: boolean
-        default: true
 
 jobs:
   trigger-deploy:
@@ -27,8 +23,6 @@ jobs:
           client-payload: |
             {
               "project_dir": "fenixnordic.solutions",
-              "project_type": "drupal",
-              "drupal_service": "drupal",
-              "force_recreate": "${{ inputs.force_recreate || false }}",
-              "run_updb": "${{ inputs.run_updb || true }}"
+              "project_type": "nuxt",
+              "force_recreate": "${{ inputs.force_recreate || false }}"
             }
