@@ -7,6 +7,7 @@ const { el: magServices } = useMagnetic(0.25)
 <template>
   <section class="hero" aria-label="Hero">
     <div class="hero-accent-bar" aria-hidden="true" />
+    <PhoenixMark :size="320" class="hero-watermark" />
 
     <div class="hero-inner container">
       <p class="hero-label hero-anim d1">{{ t.hero.label }}</p>
@@ -42,6 +43,17 @@ const { el: magServices } = useMagnetic(0.25)
   align-items: center;
   padding: 8rem 0 5rem;
   overflow: hidden;
+}
+
+/* Large watermark mark */
+.hero-watermark {
+  position: absolute;
+  right: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent);
+  opacity: 0.04;
+  pointer-events: none;
 }
 
 /* Vertical ember accent bar — left edge */

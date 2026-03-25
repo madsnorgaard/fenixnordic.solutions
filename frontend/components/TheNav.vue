@@ -16,6 +16,7 @@ onMounted(() => {
   <nav :class="['nav', { scrolled: isScrolled }]" role="navigation" aria-label="Main navigation">
     <div class="nav-inner container">
       <a href="/" class="wordmark" aria-label="Fenix Nordic Solutions home">
+        <PhoenixMark :size="16" class="wordmark-mark" />
         Fenix Nordic
       </a>
 
@@ -67,6 +68,9 @@ onMounted(() => {
 }
 
 .wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
   font-family: var(--font-display);
   font-weight: 300;
   font-size: 1.0625rem;
@@ -77,6 +81,12 @@ onMounted(() => {
   flex-shrink: 0;
 }
 .wordmark:hover { color: var(--accent-light); }
+.wordmark-mark {
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+.wordmark:hover .wordmark-mark { color: var(--accent-light); }
 
 .nav-controls {
   display: flex;
