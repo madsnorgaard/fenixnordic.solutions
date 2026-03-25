@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const t = useT()
+const { el: magContact } = useMagnetic()
+const { el: magServices } = useMagnetic(0.25)
 </script>
 
 <template>
@@ -17,11 +19,11 @@ const t = useT()
       <p class="hero-tagline hero-anim d4">{{ t.hero.tagline }}</p>
 
       <div class="hero-ctas hero-anim d5">
-        <a href="#services" class="btn-ghost">
+        <a ref="magServices" href="#services" class="btn-ghost">
           {{ t.hero.cta_services }}
           <span class="arrow" aria-hidden="true">↓</span>
         </a>
-        <a href="#contact" class="btn-primary">{{ t.hero.cta_contact }}</a>
+        <a ref="magContact" href="#contact" class="btn-primary">{{ t.hero.cta_contact }}</a>
       </div>
     </div>
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { locale, setLocale } = useLocale()
 const t = useT()
+const { el: magCta } = useMagnetic(0.3)
 
 const isScrolled = ref(false)
 
@@ -32,7 +33,7 @@ onMounted(() => {
             aria-label="Skift til dansk"
           >DA</button>
         </div>
-        <a href="#contact" class="btn-primary nav-cta">{{ t.nav.contact }}</a>
+        <a ref="magCta" href="#contact" class="btn-primary nav-cta">{{ t.nav.contact }}</a>
       </div>
     </div>
   </nav>
