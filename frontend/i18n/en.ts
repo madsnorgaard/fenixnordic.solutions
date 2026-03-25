@@ -81,7 +81,7 @@ export const en = {
       stats: [
         { value: '15+', label: 'years Drupal and PHP' },
         { value: 'DevOps', label: 'Docker, Linux, CI/CD' },
-        { value: 'SAHO', label: 'Technical lead since 2010' },
+        { value: 'Lead', label: 'Open source, tech lead since 2010' },
         { value: 'DK', label: 'Skanderborg, Denmark' },
       ],
     },
