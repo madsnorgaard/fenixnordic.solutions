@@ -72,6 +72,19 @@ export const da = {
       { value: 'EN · DA', label: 'Engelsk modersmål, dansk konversation' },
       { value: 'DK', label: 'Danmark-baseret, globalt tilgængelig' },
     ],
+    mads: {
+      heading: 'Mads Nørgaard',
+      paragraphs: [
+        'Senior udvikler og DevOps-ingeniør. Selvlært, femten år med Drupal, PHP, Docker og Linux. Teknisk lead hos Eksponent, et dansk udviklingsbureau. Teknisk lead for South African History Online siden 2010.',
+        'Hjemme i alle lag af stacken — fra containerinfrastruktur og CI/CD til headless CMS-arkitektur og frontend. Bygger de systemer, der gør levering pålidelig.',
+      ],
+      stats: [
+        { value: '15+', label: 'år med Drupal og PHP' },
+        { value: 'DevOps', label: 'Docker, Linux, CI/CD' },
+        { value: 'SAHO', label: 'Teknisk lead siden 2010' },
+        { value: 'DK', label: 'Skanderborg, Danmark' },
+      ],
+    },
   },
   contact: {
     label: 'Kom i kontakt',

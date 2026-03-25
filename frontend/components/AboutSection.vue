@@ -6,19 +6,36 @@ const { el, isVisible } = useReveal()
 <template>
   <section id="about" :ref="el" :class="['about-section reveal', { 'in-view': isVisible }]">
     <div class="container">
+      <p class="label">{{ t.about.label }}</p>
+
+      <!-- Phoenix -->
       <div class="about-grid">
-        <!-- Left: text -->
         <div class="about-text">
-          <p class="label">{{ t.about.label }}</p>
           <h2 class="about-heading">{{ t.about.heading }}</h2>
           <div class="about-paragraphs">
             <p v-for="(para, i) in t.about.paragraphs" :key="i">{{ para }}</p>
           </div>
         </div>
-
-        <!-- Right: stats -->
         <div class="about-stats">
           <div v-for="(stat, i) in t.about.stats" :key="i" class="stat-item">
+            <span class="stat-value">{{ stat.value }}</span>
+            <span class="stat-label">{{ stat.label }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-divider" aria-hidden="true" />
+
+      <!-- Mads -->
+      <div class="about-grid">
+        <div class="about-text">
+          <h2 class="about-heading">{{ t.about.mads.heading }}</h2>
+          <div class="about-paragraphs">
+            <p v-for="(para, i) in t.about.mads.paragraphs" :key="i">{{ para }}</p>
+          </div>
+        </div>
+        <div class="about-stats">
+          <div v-for="(stat, i) in t.about.mads.stats" :key="i" class="stat-item">
             <span class="stat-value">{{ stat.value }}</span>
             <span class="stat-label">{{ stat.label }}</span>
           </div>
@@ -32,6 +49,16 @@ const { el, isVisible } = useReveal()
 .about-section {
   padding: var(--section-py) 0;
   border-top: 1px solid var(--border);
+}
+
+.about-section > .container > .label {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.about-divider {
+  height: 1px;
+  background: var(--border);
+  margin: clamp(3rem, 5vw, 5rem) 0;
 }
 
 .about-grid {
