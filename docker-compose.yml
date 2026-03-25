@@ -4,10 +4,6 @@ networks:
   internal:
     external: false
 
-volumes:
-  fenix_wp_uploads:
-  fenix_wp_themes:
-
 services:
   fenix_db:
     image: mariadb:11
@@ -24,7 +20,7 @@ services:
     volumes:
       - ./data/mysql:/var/lib/mysql
     labels:
-      - "traefik.enable=false" # Disable Traefik for this service
+      - "traefik.enable=false"
     networks:
       - internal
 
@@ -52,37 +48,6 @@ services:
     depends_on:
       - fenix_db
 
-  wordpress:
-    image: wordpress:php8.2-apache
-    container_name: fenix_wp
-    env_file:
-      - .env
-    restart: unless-stopped
-    environment:
-      WORDPRESS_DB_HOST: fenix_db
-      WORDPRESS_DB_NAME: "${DB_NAME}"
-      WORDPRESS_DB_USER: "${DB_USER}"
-      WORDPRESS_DB_PASSWORD: "${DB_PASS}"
-      WORDPRESS_TABLE_PREFIX: "wp_"
-    volumes:
-      # Plugins tracked in git — rsync'd from repo to ./wp-content/plugins/
-      - ./wp-content/plugins:/var/www/html/wp-content/plugins
-      # Uploads and themes managed by Docker (not in git)
-      - fenix_wp_uploads:/var/www/html/wp-content/uploads
-      - fenix_wp_themes:/var/www/html/wp-content/themes
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.fenix_wp.rule=Host(`cms.fenixnordic.solutions`)"
-      - "traefik.http.routers.fenix_wp.entrypoints=websecure"
-      - "traefik.http.routers.fenix_wp.tls=true"
-      - "traefik.http.routers.fenix_wp.tls.certresolver=lets-encrypt"
-      - "traefik.http.services.fenix_wp.loadbalancer.server.port=80"
-    networks:
-      - internal
-      - web
-    depends_on:
-      - fenix_db
-
   nuxt:
     container_name: fenix_nuxt
     build:
@@ -96,6 +61,25 @@ services:
       - "traefik.http.routers.fenix_nuxt.tls=true"
       - "traefik.http.routers.fenix_nuxt.tls.certresolver=lets-encrypt"
       - "traefik.http.services.fenix_nuxt.loadbalancer.server.port=80"
+    networks:
+      - web
+
+  mailer:
+    container_name: fenix_mailer
+    build:
+      context: ./mailer
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      # More specific rule → higher priority than fenix_nuxt, so /api/* goes here
+      - "traefik.http.routers.fenix_mailer.rule=Host(`fenixnordic.solutions`) && PathPrefix(`/api/`)"
+      - "traefik.http.routers.fenix_mailer.entrypoints=websecure"
+      - "traefik.http.routers.fenix_mailer.tls=true"
+      - "traefik.http.routers.fenix_mailer.tls.certresolver=lets-encrypt"
+      - "traefik.http.services.fenix_mailer.loadbalancer.server.port=80"
     networks:
       - web
 
