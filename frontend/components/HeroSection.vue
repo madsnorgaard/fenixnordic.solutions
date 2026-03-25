@@ -2,14 +2,12 @@
 const t = useT()
 const { el: magContact } = useMagnetic()
 const { el: magServices } = useMagnetic(0.25)
-
-const flameActive = ref(false)
 </script>
 
 <template>
-  <section class="hero" aria-label="Hero" @mouseenter="flameActive = true" @mouseleave="flameActive = false">
+  <section class="hero" aria-label="Hero">
+    <HeroParticles />
     <div class="hero-accent-bar" aria-hidden="true" />
-    <AsciiFlame :active="flameActive" class="hero-watermark" />
 
     <div class="hero-inner container">
       <p class="hero-label hero-anim d1">{{ t.hero.label }}</p>
@@ -47,21 +45,6 @@ const flameActive = ref(false)
   overflow: hidden;
 }
 
-/* ASCII flame watermark */
-.hero-watermark {
-  position: absolute;
-  right: 4%;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--accent);
-  opacity: 0.32;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-}
-
-.hero:hover .hero-watermark {
-  opacity: 0.62;
-}
 
 /* Vertical ember accent bar — left edge */
 .hero-accent-bar {

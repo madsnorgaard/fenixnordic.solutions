@@ -5,67 +5,73 @@ const props = defineProps<{ active?: boolean }>()
 
 interface Particle { baseX: number; baseY: number; char: string; op: number; bdur: string; bdel: string }
 
-// Two-tongue Firefox-style flame silhouette.
-// Left tongue (x≈24–51, y≈4–33) and right tongue (x≈50–80, y≈8–35) are
-// separated by a valley in the upper centre, merge from y≈36 down.
+// Particle chars only — no /\|^~ which create a tree silhouette.
+// Shape: two thin elongated tongues, widest in the middle body (~y 55%),
+// base narrows again — an oval with a split top, not a triangle.
 const BASE: [number, number, string][] = [
-  // ── left tongue ────────────────────────────────────────────
-  [38,  4, "'"],
-  [34,  9, '/'], [42,  9, '\\'],
-  [30, 14, '/'], [37, 13, '^'], [45, 14, '\\'],
-  [27, 19, '/'], [34, 18, '.'], [42, 18, '|'], [49, 19, '\\'],
-  [24, 24, '/'], [31, 23, '.'], [38, 22, '*'], [46, 23, '.'], [52, 24, '\\'],
-  [23, 29, '/'], [29, 28, '.'], [36, 28, '.'], [43, 27, '^'], [50, 28, '\\'],
+  // ── left tongue — thin, tall ───────────────────────────────
+  [40,  3, "'"],
+  [37,  8, '.'], [43,  8, "'"],
+  [35, 13, '.'], [40, 12, '*'], [46, 13, '.'],
+  [34, 18, '.'], [39, 17, '.'], [44, 17, '*'], [49, 18, '.'],
+  [33, 23, '.'], [38, 22, '*'], [43, 22, '.'], [48, 22, '.'],
+  [32, 28, '.'], [37, 27, '.'], [42, 27, '*'], [47, 27, '.'], [52, 28, '.'],
+  [31, 33, '.'], [36, 32, '.'], [41, 32, '*'], [46, 32, '.'], [51, 33, '.'],
 
-  // ── right tongue (starts lower, slightly shorter) ──────────
-  [63,  8, "'"],
-  [59, 13, '/'], [67, 13, '\\'],
-  [55, 18, '/'], [62, 17, '^'], [70, 18, '\\'],
-  [52, 23, '/'], [59, 22, '.'], [66, 22, '|'], [74, 23, '\\'],
-  [50, 28, '/'], [57, 27, '.'], [64, 27, '*'], [71, 27, '.'], [78, 28, '\\'],
-  [49, 33, '/'], [55, 32, '.'], [62, 32, '.'], [69, 31, '^'], [76, 32, '\\'],
+  // ── right tongue — slightly shorter, starts lower ──────────
+  [61,  7, "'"],
+  [58, 12, '.'], [64, 12, "'"],
+  [55, 17, '.'], [61, 16, '*'], [67, 17, '.'],
+  [53, 22, '.'], [59, 21, '.'], [65, 21, '*'], [71, 22, '.'],
+  [51, 27, '.'], [57, 26, '*'], [63, 26, '.'], [69, 26, '.'],
+  [50, 32, '.'], [56, 31, '.'], [62, 31, '*'], [67, 31, '.'], [74, 32, '.'],
+  [49, 37, '.'], [55, 36, '.'], [61, 36, '*'], [67, 36, '.'], [74, 37, '.'],
 
-  // ── merge — tongues join, full width ───────────────────────
-  [21, 38, '/'], [27, 37, '.'], [33, 37, '.'], [39, 36, '*'], [45, 36, '.'],
-  [51, 36, '|'], [57, 36, '.'], [63, 36, '*'], [69, 37, '.'], [75, 37, '.'], [82, 38, '\\'],
+  // ── merge — tongues join, start spreading wide ─────────────
+  [28, 41, '.'], [34, 40, '*'], [39, 40, '.'], [44, 40, '.'],
+  [50, 40, '*'], [55, 40, '.'], [61, 40, '.'], [66, 40, '*'], [72, 41, '.'], [78, 41, '.'],
 
-  [19, 44, '/'], [25, 43, '.'], [31, 43, '.'], [37, 42, '*'], [43, 42, '.'],
-  [49, 41, '^'], [55, 42, '.'], [61, 42, '*'], [67, 43, '.'], [73, 43, '.'], [80, 44, '\\'],
+  [24, 46, '.'], [29, 45, '.'], [34, 45, '*'], [39, 45, '.'], [44, 44, '.'],
+  [50, 44, '*'], [55, 44, '.'], [60, 44, '.'], [66, 45, '*'], [71, 45, '.'],
+  [76, 45, '.'], [82, 46, '.'],
 
-  // ── body ───────────────────────────────────────────────────
-  [17, 50, '/'], [23, 49, '.'], [29, 49, '*'], [35, 48, '.'], [41, 48, '.'],
-  [48, 48, '|'], [54, 48, '.'], [60, 48, '.'], [66, 49, '*'], [72, 49, '.'], [79, 49, '.'], [84, 50, '\\'],
+  // ── body — widest here, then narrows again ─────────────────
+  [20, 51, '.'], [25, 51, '*'], [30, 50, '.'], [36, 50, '.'], [41, 50, '*'],
+  [46, 50, '.'], [51, 49, '*'], [56, 50, '.'], [61, 50, '.'], [66, 50, '*'],
+  [71, 51, '.'], [76, 51, '.'], [82, 51, '.'],
 
-  [16, 56, '~'], [22, 55, '.'], [28, 55, '*'], [34, 54, '.'], [40, 54, '.'],
-  [47, 54, '|'], [53, 54, '.'], [59, 54, '.'], [65, 55, '*'], [71, 55, '.'], [77, 55, '~'],
+  [17, 56, '.'], [22, 56, '.'], [28, 55, '*'], [33, 55, '.'], [38, 55, '.'],
+  [43, 55, '*'], [48, 55, '.'], [53, 54, '*'], [58, 55, '.'], [63, 55, '.'],
+  [68, 55, '*'], [73, 55, '.'], [79, 56, '.'], [84, 56, '.'],
 
-  [17, 62, '/'], [23, 61, '.'], [29, 61, '*'], [35, 60, '.'], [41, 60, '.'],
-  [48, 60, '|'], [54, 60, '.'], [60, 60, '.'], [66, 61, '*'], [72, 61, '.'], [79, 61, '.'], [84, 62, '\\'],
+  [19, 61, '.'], [24, 61, '*'], [30, 61, '.'], [35, 60, '.'], [40, 60, '*'],
+  [45, 60, '.'], [50, 60, '*'], [55, 60, '.'], [60, 60, '.'], [65, 61, '*'],
+  [70, 61, '.'], [75, 61, '.'], [81, 61, '.'],
 
-  // ── base ───────────────────────────────────────────────────
-  [18, 68, '~'], [24, 67, '.'], [30, 67, '.'], [36, 66, '*'], [42, 66, '.'],
-  [49, 66, '|'], [55, 66, '.'], [61, 66, '*'], [67, 67, '.'], [73, 67, '.'], [80, 68, '~'],
+  // ── base — NARROWER than body (not a triangle) ─────────────
+  [23, 66, '.'], [28, 66, '*'], [33, 66, '.'], [38, 65, '.'], [43, 65, '*'],
+  [48, 65, '.'], [53, 65, '*'], [58, 65, '.'], [63, 65, '.'], [68, 66, '*'],
+  [73, 66, '.'], [78, 66, '.'],
 
-  [22, 73, '~'], [28, 72, '.'], [34, 72, '.'], [40, 71, '*'], [46, 71, '.'],
-  [52, 71, '|'], [58, 71, '.'], [64, 71, '*'], [70, 72, '.'], [76, 72, '~'],
+  [27, 72, '.'], [32, 72, '*'], [37, 71, '.'], [42, 71, '.'], [47, 71, '*'],
+  [52, 71, '.'], [57, 71, '.'], [62, 72, '*'], [67, 72, '.'], [73, 72, '.'],
 
-  // ── stray sparks outside silhouette ────────────────────────
-  [13, 23, "'"], [86, 31, '`'], [88, 50, '.'], [9, 58, '.'], [90, 65, "'"],
+  // ── stray sparks outside body ──────────────────────────────
+  [13, 28, "'"], [87, 35, "'"], [11, 53, '.'], [90, 50, '.'], [86, 64, "'"],
 ]
 
 const containerRef  = ref<HTMLElement>()
 const charRefs      = new Array<HTMLElement | null>(BASE.length).fill(null)
 const particles     = ref<Particle[]>([])
 
-const RADIUS   = 200   // px — pull influence radius
-const STRENGTH = 0.48  // pull magnitude (mirrors useMagnetic ≈ 0.38 but per-char)
+const RADIUS   = 200
+const STRENGTH = 0.48
 
 let lastX = -9999
 let lastY = -9999
 let heroHovered = false
 let frameScheduled = false
 
-// ── apply magnetic pull to all chars ─────────────────────────
 function applyPulls() {
   frameScheduled = false
   if (!containerRef.value) return
@@ -83,11 +89,9 @@ function applyPulls() {
     const dist  = Math.sqrt(dx * dx + dy * dy)
 
     if (dist < RADIUS && heroHovered) {
-      const infl  = Math.pow(1 - dist / RADIUS, 2)   // quadratic falloff
-      const pullX = (dx * infl * STRENGTH).toFixed(1)
-      const pullY = (dy * infl * STRENGTH).toFixed(1)
+      const infl  = Math.pow(1 - dist / RADIUS, 2)
       el.style.transition = 'transform 0.12s ease'
-      el.style.transform  = `translate(calc(-50% + ${pullX}px), calc(-50% + ${pullY}px))`
+      el.style.transform  = `translate(calc(-50% + ${(dx * infl * STRENGTH).toFixed(1)}px), calc(-50% + ${(dy * infl * STRENGTH).toFixed(1)}px))`
     } else {
       el.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
       el.style.transform  = 'translate(-50%, -50%)'
@@ -95,7 +99,6 @@ function applyPulls() {
   })
 }
 
-// ── snap all chars back to origin (spring) ───────────────────
 function snapBack() {
   charRefs.forEach(el => {
     if (!el) return
@@ -113,7 +116,6 @@ function onMouseMove(e: MouseEvent) {
   }
 }
 
-// React to parent's hero hover state
 watch(() => props.active, val => {
   heroHovered = !!val
   if (!val) snapBack()
@@ -124,7 +126,7 @@ onMounted(() => {
     baseX: x as number,
     baseY: y as number,
     char:  char as string,
-    op:    0.35 + Math.random() * 0.55,
+    op:    0.4 + Math.random() * 0.5,
     bdur:  (2.5 + Math.random() * 3.5).toFixed(2) + 's',
     bdel:  -(Math.random() * 6).toFixed(2) + 's',
   }))
@@ -160,7 +162,7 @@ onUnmounted(() => {
   width: 300px;
   height: 540px;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.0625rem;
+  font-size: 1.125rem;
   color: currentColor;
   user-select: none;
   pointer-events: none;
@@ -170,13 +172,12 @@ onUnmounted(() => {
   position: absolute;
   transform: translate(-50%, -50%);
   opacity: var(--op);
-  /* breathe affects opacity only — transform is owned by JS */
   animation: breathe var(--bdur) var(--bdel) infinite ease-in-out;
   will-change: transform, opacity;
 }
 
 @keyframes breathe {
   0%, 100% { opacity: var(--op); }
-  50%       { opacity: calc(var(--op) * 0.28); }
+  50%       { opacity: calc(var(--op) * 0.25); }
 }
 </style>
