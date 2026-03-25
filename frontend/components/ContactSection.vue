@@ -13,7 +13,7 @@ const handleSubmit = async (e: Event) => {
   errorMsg.value = ''
 
   try {
-    const res = await fetch('https://madsnorgaard.net/wp-json/fenix/v1/contact', {
+    const res = await fetch('https://cms.fenixnordic.solutions/wp-json/fenix/v1/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

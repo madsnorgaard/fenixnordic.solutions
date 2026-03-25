@@ -48,6 +48,33 @@ services:
     depends_on:
       - fenix_db
 
+  wordpress:
+    image: wordpress:php8.2-apache
+    container_name: fenix_wp
+    env_file:
+      - .env
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: fenix_db
+      WORDPRESS_DB_NAME: "${DB_NAME}"
+      WORDPRESS_DB_USER: "${DB_USER}"
+      WORDPRESS_DB_PASSWORD: "${DB_PASS}"
+      WORDPRESS_TABLE_PREFIX: "wp_"
+    volumes:
+      - ./data/wp-content:/var/www/html/wp-content
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fenix_wp.rule=Host(`cms.fenixnordic.solutions`)"
+      - "traefik.http.routers.fenix_wp.entrypoints=websecure"
+      - "traefik.http.routers.fenix_wp.tls=true"
+      - "traefik.http.routers.fenix_wp.tls.certresolver=lets-encrypt"
+      - "traefik.http.services.fenix_wp.loadbalancer.server.port=80"
+    networks:
+      - internal
+      - web
+    depends_on:
+      - fenix_db
+
   nuxt:
     container_name: fenix_nuxt
     build:
