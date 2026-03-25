@@ -60,7 +60,7 @@ export const en = {
   },
   about: {
     label: 'Who we are',
-    heading: 'Phoenix Nørgaard',
+    heading: 'Phoenix',
     paragraphs: [
       'Phoenix has spent fifteen years building things that actually ship. Creative productions with SoldierMuse in Cape Town. Supply chain operations at Hummel International in Denmark. Now leading the digital transformation of South African History Online from Skanderborg.',
       'The consistent thread: closing the gap between what a project promises and what it delivers. SCRUM-certified. Experienced managing distributed international teams. Comfortable in the space where creative direction and operational precision meet.',
@@ -73,7 +73,7 @@ export const en = {
       { value: 'DK', label: 'Denmark-based, globally available' },
     ],
     mads: {
-      heading: 'Mads Nørgaard',
+      heading: 'Mads',
       paragraphs: [
         'Senior developer and DevOps engineer. Self-taught, fifteen years building on Drupal, PHP, Docker, and Linux. Senior developer and DevOps engineer at Eksponent, a Danish development agency. Technical lead for South African History Online since 2010.',
         'Comfortable at every layer of the stack: from container infrastructure and CI/CD to headless CMS architecture and frontend. Builds the systems that make delivery reliable.',

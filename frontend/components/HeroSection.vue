@@ -50,17 +50,17 @@ const flameActive = ref(false)
 /* ASCII flame watermark */
 .hero-watermark {
   position: absolute;
-  right: 8%;
+  right: 4%;
   top: 50%;
   transform: translateY(-50%);
   color: var(--accent);
-  opacity: 0.18;
+  opacity: 0.26;
   transition: opacity 0.6s ease;
   pointer-events: none;
 }
 
 .hero:hover .hero-watermark {
-  opacity: 0.38;
+  opacity: 0.52;
 }
 
 /* Vertical ember accent bar — left edge */
