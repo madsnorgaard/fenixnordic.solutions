@@ -34,7 +34,7 @@ $api_key = getenv('MAILGUN_API_KEY');
 $domain  = getenv('MAILGUN_DOMAIN');
 $region  = getenv('MAILGUN_REGION') ?: 'us';
 $from    = getenv('MAIL_FROM')      ?: "Fenix Nordic Solutions <hello@{$domain}>";
-$to      = 'phoenixnorgaard@outlook.com';
+$to      = 'madsnorgaard@live.dk';
 
 if (!$api_key || !$domain) {
     error_log('Fenix mailer: MAILGUN_API_KEY or MAILGUN_DOMAIN not set');
