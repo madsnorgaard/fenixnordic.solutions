@@ -7,6 +7,30 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit(json_encode(['error' => 'Method not allowed']));
 }
 
+// Require JSON content type
+$ct = $_SERVER['CONTENT_TYPE'] ?? '';
+if (strpos($ct, 'application/json') === false) {
+    http_response_code(415);
+    exit(json_encode(['error' => 'Unsupported media type']));
+}
+
+// Rate limit: 3 submissions per 10 minutes per IP
+if (function_exists('apcu_fetch')) {
+    $ip  = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $key = 'fenix_rl_' . md5($ip);
+    $count = apcu_fetch($key, $exists);
+    if (!$exists) {
+        apcu_add($key, 1, 600);
+        $count = 1;
+    } else {
+        $count = apcu_inc($key);
+    }
+    if ($count > 3) {
+        http_response_code(429);
+        exit(json_encode(['error' => 'Too many requests']));
+    }
+}
+
 $body = json_decode(file_get_contents('php://input'), true);
 if (!is_array($body)) {
     http_response_code(400);
@@ -27,6 +51,12 @@ $company = trim(strip_tags($body['company'] ?? ''));
 if (!$name || !$email || !$message) {
     http_response_code(400);
     exit(json_encode(['error' => 'Required fields missing']));
+}
+
+// Length caps
+if (mb_strlen($name) > 200 || mb_strlen($company) > 200 || mb_strlen($message) > 5000) {
+    http_response_code(400);
+    exit(json_encode(['error' => 'Input too long']));
 }
 
 // Config from env
