@@ -4,6 +4,10 @@ networks:
   internal:
     external: false
 
+volumes:
+  fenix_wp_uploads:
+  fenix_wp_themes:
+
 services:
   fenix_db:
     image: mariadb:11
@@ -61,7 +65,11 @@ services:
       WORDPRESS_DB_PASSWORD: "${DB_PASS}"
       WORDPRESS_TABLE_PREFIX: "wp_"
     volumes:
-      - ./data/wp-content:/var/www/html/wp-content
+      # Plugins tracked in git — rsync'd from repo to ./wp-content/plugins/
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+      # Uploads and themes managed by Docker (not in git)
+      - fenix_wp_uploads:/var/www/html/wp-content/uploads
+      - fenix_wp_themes:/var/www/html/wp-content/themes
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.fenix_wp.rule=Host(`cms.fenixnordic.solutions`)"
