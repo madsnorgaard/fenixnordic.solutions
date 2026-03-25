@@ -1,72 +1,154 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 
-defineProps<{ active?: boolean }>()
+const props = defineProps<{ active?: boolean }>()
 
-interface Particle { x: number; y: number; char: string; tx: string; ty: string; rot: string; dur: string; delay: string; op: string }
+interface Particle { baseX: number; baseY: number; char: string; op: number; bdur: string; bdel: string }
 
-const particles = ref<Particle[]>([])
-
-// Asymmetric double-tongue flame — irregular edges, no perfect diagonals
+// Two-tongue Firefox-style flame silhouette.
+// Left tongue (x≈24–51, y≈4–33) and right tongue (x≈50–80, y≈8–35) are
+// separated by a valley in the upper centre, merge from y≈36 down.
 const BASE: [number, number, string][] = [
-  // === left tongue (primary, leans left) ===
-  [40,  2, "'"],
-  [36,  6, '/'], [41,  5, '^'], [47,  6, '\\'],
-  [33, 11, '/'], [39, 10, '.'], [44, 10, '|'], [50, 11, '\\'],
+  // ── left tongue ────────────────────────────────────────────
+  [38,  4, "'"],
+  [34,  9, '/'], [42,  9, '\\'],
+  [30, 14, '/'], [37, 13, '^'], [45, 14, '\\'],
+  [27, 19, '/'], [34, 18, '.'], [42, 18, '|'], [49, 19, '\\'],
+  [24, 24, '/'], [31, 23, '.'], [38, 22, '*'], [46, 23, '.'], [52, 24, '\\'],
+  [23, 29, '/'], [29, 28, '.'], [36, 28, '.'], [43, 27, '^'], [50, 28, '\\'],
 
-  // === right spark (secondary, offset right) ===
-  [64,  4, "'"],
-  [60,  8, '/'], [65,  7, '`'], [69,  8, '\\'],
-  [57, 13, '/'], [63, 12, '^'], [68, 13, '\\'],
+  // ── right tongue (starts lower, slightly shorter) ──────────
+  [63,  8, "'"],
+  [59, 13, '/'], [67, 13, '\\'],
+  [55, 18, '/'], [62, 17, '^'], [70, 18, '\\'],
+  [52, 23, '/'], [59, 22, '.'], [66, 22, '|'], [74, 23, '\\'],
+  [50, 28, '/'], [57, 27, '.'], [64, 27, '*'], [71, 27, '.'], [78, 28, '\\'],
+  [49, 33, '/'], [55, 32, '.'], [62, 32, '.'], [69, 31, '^'], [76, 32, '\\'],
 
-  // === tongues merge — deliberately uneven ===
-  [30, 17, '~'], [37, 16, '/'], [42, 15, '.'], [47, 14, '|'], [52, 14, '~'], [58, 15, '.'], [64, 16, '\\'], [70, 17, '~'],
-  [27, 22, '/'], [33, 21, '.'], [39, 20, '*'], [45, 19, '.'], [50, 19, '^'], [56, 20, '.'], [62, 21, '`'], [67, 22, '\\'],
+  // ── merge — tongues join, full width ───────────────────────
+  [21, 38, '/'], [27, 37, '.'], [33, 37, '.'], [39, 36, '*'], [45, 36, '.'],
+  [51, 36, '|'], [57, 36, '.'], [63, 36, '*'], [69, 37, '.'], [75, 37, '.'], [82, 38, '\\'],
 
-  // === mid-upper — jagged left edge, smoother right ===
-  [23, 28, '~'], [30, 27, '/'], [36, 26, '.'], [42, 25, '.'], [47, 25, '|'], [53, 25, '.'], [59, 26, '*'], [65, 27, '\\'], [72, 28, '~'],
-  [20, 34, '/'], [27, 33, '.'], [34, 32, '*'], [40, 31, '.'], [46, 30, '.'], [50, 30, '^'], [55, 31, '.'], [61, 32, '.'], [68, 33, '\\'],
+  [19, 44, '/'], [25, 43, '.'], [31, 43, '.'], [37, 42, '*'], [43, 42, '.'],
+  [49, 41, '^'], [55, 42, '.'], [61, 42, '*'], [67, 43, '.'], [73, 43, '.'], [80, 44, '\\'],
 
-  // === mid — wider, chars loosely scattered inside ===
-  [17, 40, '~'], [24, 39, '/'], [31, 38, '.'], [37, 37, '*'], [43, 36, '.'], [48, 36, '~'], [53, 36, '~'], [59, 37, '.'], [65, 38, '*'], [71, 39, '\\'], [77, 40, '~'],
-  [14, 46, '/'], [22, 45, '.'], [29, 44, '.'], [35, 43, '*'], [41, 42, '.'], [47, 42, '`'], [53, 42, '.'], [59, 43, '*'], [65, 44, '.'], [72, 45, '.'], [79, 46, '\\'],
+  // ── body ───────────────────────────────────────────────────
+  [17, 50, '/'], [23, 49, '.'], [29, 49, '*'], [35, 48, '.'], [41, 48, '.'],
+  [48, 48, '|'], [54, 48, '.'], [60, 48, '.'], [66, 49, '*'], [72, 49, '.'], [79, 49, '.'], [84, 50, '\\'],
 
-  // === lower — wide, uneven inner texture ===
-  [12, 52, '~'], [19, 51, '/'], [27, 50, '.'], [34, 49, '*'], [40, 48, '.'], [46, 48, '~'], [50, 48, '^'], [55, 48, '~'], [61, 49, '.'], [68, 50, '*'], [75, 51, '\\'], [82, 52, '~'],
-  [10, 58, '.'], [17, 57, '.'], [24, 56, '/'], [31, 55, '.'], [38, 54, '*'], [44, 54, '.'], [50, 54, '|'], [56, 54, '.'], [62, 55, '*'], [69, 56, '\\'], [76, 57, '.'], [83, 58, '.'],
+  [16, 56, '~'], [22, 55, '.'], [28, 55, '*'], [34, 54, '.'], [40, 54, '.'],
+  [47, 54, '|'], [53, 54, '.'], [59, 54, '.'], [65, 55, '*'], [71, 55, '.'], [77, 55, '~'],
 
-  // === stray sparks — chars outside the body silhouette ===
-  [15, 24, "'"], [82, 29, '`'], [88, 44, '.'], [8, 48, '.'], [87, 58, "'"],
+  [17, 62, '/'], [23, 61, '.'], [29, 61, '*'], [35, 60, '.'], [41, 60, '.'],
+  [48, 60, '|'], [54, 60, '.'], [60, 60, '.'], [66, 61, '*'], [72, 61, '.'], [79, 61, '.'], [84, 62, '\\'],
+
+  // ── base ───────────────────────────────────────────────────
+  [18, 68, '~'], [24, 67, '.'], [30, 67, '.'], [36, 66, '*'], [42, 66, '.'],
+  [49, 66, '|'], [55, 66, '.'], [61, 66, '*'], [67, 67, '.'], [73, 67, '.'], [80, 68, '~'],
+
+  [22, 73, '~'], [28, 72, '.'], [34, 72, '.'], [40, 71, '*'], [46, 71, '.'],
+  [52, 71, '|'], [58, 71, '.'], [64, 71, '*'], [70, 72, '.'], [76, 72, '~'],
+
+  // ── stray sparks outside silhouette ────────────────────────
+  [13, 23, "'"], [86, 31, '`'], [88, 50, '.'], [9, 58, '.'], [90, 65, "'"],
 ]
+
+const containerRef  = ref<HTMLElement>()
+const charRefs      = new Array<HTMLElement | null>(BASE.length).fill(null)
+const particles     = ref<Particle[]>([])
+
+const RADIUS   = 200   // px — pull influence radius
+const STRENGTH = 0.48  // pull magnitude (mirrors useMagnetic ≈ 0.38 but per-char)
+
+let lastX = -9999
+let lastY = -9999
+let heroHovered = false
+let frameScheduled = false
+
+// ── apply magnetic pull to all chars ─────────────────────────
+function applyPulls() {
+  frameScheduled = false
+  if (!containerRef.value) return
+  const rect = containerRef.value.getBoundingClientRect()
+
+  charRefs.forEach((el, i) => {
+    if (!el) return
+    const p = particles.value[i]
+    if (!p) return
+
+    const charX = rect.left + (p.baseX / 100) * rect.width
+    const charY = rect.top  + (p.baseY / 100) * rect.height
+    const dx    = lastX - charX
+    const dy    = lastY - charY
+    const dist  = Math.sqrt(dx * dx + dy * dy)
+
+    if (dist < RADIUS && heroHovered) {
+      const infl  = Math.pow(1 - dist / RADIUS, 2)   // quadratic falloff
+      const pullX = (dx * infl * STRENGTH).toFixed(1)
+      const pullY = (dy * infl * STRENGTH).toFixed(1)
+      el.style.transition = 'transform 0.12s ease'
+      el.style.transform  = `translate(calc(-50% + ${pullX}px), calc(-50% + ${pullY}px))`
+    } else {
+      el.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
+      el.style.transform  = 'translate(-50%, -50%)'
+    }
+  })
+}
+
+// ── snap all chars back to origin (spring) ───────────────────
+function snapBack() {
+  charRefs.forEach(el => {
+    if (!el) return
+    el.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
+    el.style.transform  = 'translate(-50%, -50%)'
+  })
+}
+
+function onMouseMove(e: MouseEvent) {
+  lastX = e.clientX
+  lastY = e.clientY
+  if (!frameScheduled) {
+    frameScheduled = true
+    requestAnimationFrame(applyPulls)
+  }
+}
+
+// React to parent's hero hover state
+watch(() => props.active, val => {
+  heroHovered = !!val
+  if (!val) snapBack()
+})
 
 onMounted(() => {
   particles.value = BASE.map(([x, y, char]) => ({
-    x, y, char,
-    tx:    ((Math.random() * 22 - 11).toFixed(1))  + 'px',
-    ty:    (-(Math.random() * 14 + 3).toFixed(1))  + 'px',
-    rot:   ((Math.random() * 36 - 18).toFixed(1))  + 'deg',
-    dur:   ((Math.random() * 2.8 + 1.8).toFixed(2)) + 's',
-    delay: (-(Math.random() * 5).toFixed(2))        + 's',
-    op:    (0.35 + Math.random() * 0.55).toFixed(2),
+    baseX: x as number,
+    baseY: y as number,
+    char:  char as string,
+    op:    0.35 + Math.random() * 0.55,
+    bdur:  (2.5 + Math.random() * 3.5).toFixed(2) + 's',
+    bdel:  -(Math.random() * 6).toFixed(2) + 's',
   }))
+  window.addEventListener('mousemove', onMouseMove, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('mousemove', onMouseMove)
 })
 </script>
 
 <template>
-  <div class="ascii-flame" :class="{ active }" aria-hidden="true">
+  <div ref="containerRef" class="ascii-flame" aria-hidden="true">
     <span
       v-for="(p, i) in particles"
       :key="i"
+      :ref="(el) => { if (el) charRefs[i] = el as HTMLElement }"
       class="fc"
       :style="{
-        left:    p.x + '%',
-        top:     p.y + '%',
-        '--tx':  p.tx,
-        '--ty':  p.ty,
-        '--rot': p.rot,
-        '--dur': p.dur,
-        '--del': p.delay,
-        '--op':  p.op,
+        left:    p.baseX + '%',
+        top:     p.baseY + '%',
+        '--op':  p.op.toFixed(2),
+        '--bdur': p.bdur,
+        '--bdel': p.bdel,
       }"
     >{{ p.char }}</span>
   </div>
@@ -76,7 +158,7 @@ onMounted(() => {
 .ascii-flame {
   position: relative;
   width: 300px;
-  height: 560px;
+  height: 540px;
   font-family: 'Courier New', Courier, monospace;
   font-size: 1.0625rem;
   color: currentColor;
@@ -88,24 +170,13 @@ onMounted(() => {
   position: absolute;
   transform: translate(-50%, -50%);
   opacity: var(--op);
-  animation: breathe calc(var(--dur) * 1.8) var(--del) infinite ease-in-out;
+  /* breathe affects opacity only — transform is owned by JS */
+  animation: breathe var(--bdur) var(--bdel) infinite ease-in-out;
   will-change: transform, opacity;
 }
 
-.ascii-flame.active .fc {
-  animation: drift var(--dur) var(--del) infinite ease-in-out;
-}
-
 @keyframes breathe {
-  0%, 100% { opacity: var(--op); transform: translate(-50%, -50%); }
-  50%       { opacity: calc(var(--op) * 0.3); transform: translate(-50%, -50%); }
-}
-
-@keyframes drift {
-  0%   { transform: translate(-50%, -50%) rotate(0deg);                                                                              opacity: var(--op); }
-  20%  { transform: translate(calc(-50% + var(--tx)),           calc(-50% + var(--ty) * 0.4)) rotate(calc(var(--rot) * 0.6));        opacity: calc(var(--op) * 1.4); }
-  50%  { transform: translate(calc(-50% + var(--tx) * -0.55),  calc(-50% + var(--ty)))        rotate(var(--rot));                    opacity: var(--op); }
-  78%  { transform: translate(calc(-50% + var(--tx) * 0.3),    calc(-50% + var(--ty) * 0.5)) rotate(calc(var(--rot) * -0.45));      opacity: calc(var(--op) * 0.7); }
-  100% { transform: translate(-50%, -50%) rotate(0deg);                                                                              opacity: var(--op); }
+  0%, 100% { opacity: var(--op); }
+  50%       { opacity: calc(var(--op) * 0.28); }
 }
 </style>

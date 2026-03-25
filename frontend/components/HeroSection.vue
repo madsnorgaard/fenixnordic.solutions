@@ -54,13 +54,13 @@ const flameActive = ref(false)
   top: 50%;
   transform: translateY(-50%);
   color: var(--accent);
-  opacity: 0.26;
-  transition: opacity 0.6s ease;
+  opacity: 0.32;
+  transition: opacity 0.5s ease;
   pointer-events: none;
 }
 
 .hero:hover .hero-watermark {
-  opacity: 0.52;
+  opacity: 0.62;
 }
 
 /* Vertical ember accent bar — left edge */
