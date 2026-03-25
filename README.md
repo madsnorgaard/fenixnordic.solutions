@@ -1,96 +1,145 @@
 [![Deploy to Production](https://github.com/madsnorgaard/fenixnordic.solutions/actions/workflows/deploy.yml/badge.svg)](https://github.com/madsnorgaard/fenixnordic.solutions/actions/workflows/deploy.yml)
 
-# Project description
-This project includes Drupal 11, Drush 13, Composer install of Drupal Recommended Project and can be used to develop, stage or put into production any Drupal 11 project.
+# fenixnordic.solutions
 
-Also included are drush/config-extra and other utilities for CI/CD in terms of a Drupal project - site updates, database schema updates, database backups, push of databases via git, backup of files, replication of production environments and much more.
+Marketing site for Fenix Nordic Solutions. Bilingual EN/DA, dark Nordic editorial design.
 
-This is a terminal built environment based on the minimal install profile and the `./drush site:install minimal` command.
+**Stack**: Nuxt 3 (static generate) · nginx:alpine · Docker · Traefik TLS
 
-The thought behind this approach is to prepare the environment and tools needed to always be running an updated system with a modern proactive approach. The main goal is to have a fully automated production ready installation. Thus this project includes no modules, dependencies or themes not needed for the project beforehand, making it more manageable and minimal in terms of maintenance.
+---
 
-## Development
+## Local development
 
+```bash
+cd frontend/
+npm install
+npm run dev -- --port 3030
+# → http://localhost:3030
+```
 
-### Run with Docker
+To preview the production static build:
 
-For development purposes this project can be started with:
+```bash
+npm run generate
+npx serve .output/public
+```
 
-   ```sh
-   $ docker-compose up -d
-   ```
+---
 
-Drupal 11 will be available via [localhost:9998](http://localhost:9998/)
+## Project structure
 
-phpMyAdmin will for development purposes be available via [localhost:9999](http://localhost:9999/)
+```
+frontend/
+  app.vue                   Root layout (TheCursor + NuxtPage + grain overlay)
+  pages/index.vue           Page composition (section order)
+  components/
+    TheNav.vue              Fixed nav, scroll opacity, lang toggle
+    HeroSection.vue         Full-viewport hero, 3-line headline
+    HowWeWorkSection.vue    Define / Build / Deliver process steps
+    ServicesSection.vue     2×2 capability grid
+    AboutSection.vue        Phoenix profile + stats column
+    ContactSection.vue      mailto form + contact details
+    TheFooter.vue           One-line footer
+    TheCursor.vue           Custom ember cursor + click sparks
+  composables/
+    useLocale.ts            EN/DA state via useState, persists to localStorage
+    useT.ts                 Returns typed i18n object for current locale
+    useReveal.ts            IntersectionObserver scroll reveal
+    useMagnetic.ts          Magnetic pull effect for CTA buttons
+  i18n/
+    en.ts                   All English strings
+    da.ts                   All Danish strings
+  assets/css/main.css       Design system: variables, reset, animations, buttons
+  public/favicon.svg        Ember circle SVG
+  Dockerfile                node:22-alpine build → nginx:alpine serve
+  nginx.conf                SPA fallback, gzip, 1y cache for assets
+```
 
-#### Basic site configuration
-Rename your project or set your frontpage url:
+---
 
-- [go to your basic settings page via GUI](http://localhost:9998/admin/config/system/site-information)
-- fill in the field "Default front page" with `/node`
-- [visit the frontpage](http://localhost:9998/)
+## Content updates
 
-#### Fix file and cache permissions:
+All copy lives in `frontend/i18n/en.ts` and `frontend/i18n/da.ts`.
 
-   ```sh
-   $ chmod 777 -R web/sites/default/files
-   ```
+Keys: `hero`, `how` (process steps), `services`, `about`, `contact`, `footer`.
 
+After editing: commit and push — the deploy pipeline handles the rest.
 
-### Using Composer
+No em dashes anywhere in copy.
 
-#### Composer dependencies
+---
 
-To install modules or other dependencies strictly use Composer. Installed dependencies are locked to specific versions using the `composer.lock` file. `composer install` will install every package specified in `composer.json` with respect to the pinned versions in `composer.lock`.
+## Design system
 
-#### Adding dependencies
+| Variable | Value | Use |
+|----------|-------|-----|
+| `--bg` | `#0b0b10` | Page background |
+| `--surface` | `#111119` | Card backgrounds |
+| `--border` | `#1c1c2a` | All borders |
+| `--text` | `#f2ece0` | Body text |
+| `--text-muted` | `#7a7585` | Secondary text |
+| `--accent` | `#c4622a` | Ember / CTA colour |
+| `--font-display` | Cormorant Garamond | Headings |
+| `--font-body` | DM Sans | Body, UI |
 
-Use `composer require` to add and install new packages. Alternatively add the requirement to `composer.json` and run `composer install`.
+Fonts loaded via Google Fonts in `nuxt.config.ts`.
 
-   ```sh
-    $ docker-compose exec -T drupal composer require "vendor/package:2.*"
-   ```
+---
 
-#### Updating dependencies
+## Deploy pipeline
 
-When a version update is needed, use `composer update vendor/package`.
+Push to `main` triggers GitHub Actions (`.github/workflows/deploy.yml`), which fires a
+`repository_dispatch` event to `madsnorgaard/contabo-infrastructure`.
 
-   ```sh
-   $ docker-compose exec -T drupal composer update vendor/package
-   ```
+The infrastructure runner (self-hosted on VPS1):
+1. Checks out this repo
+2. Rsyncs `docker-compose.yml` + `frontend/` to VPS2 at `~/docker/fenixnordic.solutions/`
+3. Runs `docker compose build nuxt` on VPS2
+4. Runs `docker compose up -d --remove-orphans`
 
-On first run, the `composer.lock` file was generated using `composer update` without further parameters.
+VPS2 does not need GitHub SSH access — all files are pushed from the runner.
 
-#### Running tests (coming soon)
+**Why `npm install` not `npm ci`**: dependency tree has conflicting commander version
+ranges across transitive deps; `npm ci` rejects the lockfile. `npm install` resolves it.
 
-   ```sh
+---
 
-   ```
+## Docker services
 
+| Service | Container | Purpose |
+|---------|-----------|---------|
+| `nuxt` | `fenix_nuxt` | Static site via nginx, Traefik-routed to fenixnordic.solutions |
+| `fenix_db` | `fenix_db` | MariaDB 11, internal only |
+| `phpmyadmin` | `fenix_db_admin` | DB admin at phpmyadmin.fenixnordic.solutions |
+| `fenix_redis` | `fenix_redis` | Redis, internal only |
+| `fenix_solr` | `fenix_solr` | Solr 8.11, internal only (no host port — conflicts with madsnorgaard_solr) |
 
-### Using Drush
-Run Drush commands using - this command provides a full list of useful Drush commands:
+Database and Solr are retained for a future headless CMS integration.
 
-   ```sh
-   $ docker-compose exec -T drupal ./drush
-   ```
+---
 
-#### Backup of database using Drush and Docker
+## Maintenance
 
-To backup the database, we will use Drush, Docker, and Bash. The backup files will be stored in the `backups` directory under `data`.
+**Rebuild and restart the site container on VPS2:**
+```bash
+cd ~/docker/fenixnordic.solutions
+docker compose build nuxt
+docker compose up -d nuxt
+```
 
-Here is the command to create a backup:
+**Check container status:**
+```bash
+docker compose ps
+docker compose logs nuxt --tail 30
+```
 
-   ```sh
-   $ docker exec -it madsnorgaard_drupal drush sql-dump --gzip --result-file=/opt/drupal/backups/drupal.madsnorgaard.net-$(date +%Y-%m-%d-%H-%M-%S).sql
-   ```
+**Force full redeploy** via GitHub Actions → Deploy to Production → Run workflow → check "Force recreate containers".
 
-This command does the following:
+---
 
-- `docker exec -it madsnorgaard_drupal` runs a command in the `madsnorgaard_drupal` Docker container.
-- `drush sql-dump` uses Drush to create a dump of the Drupal database.
-- `--gzip` compresses the dump file using gzip.
-- `--result-file=/opt/drupal/backups/drupal.madsnorgaard.net-$(date +%Y-%m-%d-%H-%M-%S).sql` specifies the output file for the dump. The filename includes the current date and time to ensure that each backup file has a unique name.
+## Known issues / gotchas
 
-After running this command, you can find the backup file in the `data/backups` directory. The backup file will have a `.sql.gz` extension and its name will include the date and time when the backup was created.
+- `fenix_solr` must not expose port 8983 on the host — `madsnorgaard_solr` already owns it.
+  The port binding is intentionally absent from `docker-compose.yml`.
+- Old Drupal artefacts (`web/`, `composer.json`, `settings.php`, etc.) remain in the repo root
+  — they are not used by the Nuxt site and can be cleaned up in a future housekeeping pass.
