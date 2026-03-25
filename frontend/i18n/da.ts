@@ -70,7 +70,7 @@ export const da = {
       { value: '15+', label: 'års international erfaring' },
       { value: 'SCRUM', label: 'certificeret projektledelse' },
       { value: 'EN · DA', label: 'Engelsk modersmål, dansk konversation' },
-      { value: 'DK', label: 'Skanderborg, globalt tilgængelig' },
+      { value: 'DK', label: 'Danmark-baseret, globalt tilgængelig' },
     ],
   },
   contact: {
@@ -79,7 +79,7 @@ export const da = {
     subheading: 'Fortæl os om dit projekt, og vi vender tilbage inden for en arbejdsdag.',
     phone: '+45 26 25 29 89',
     email: 'phoenixnorgaard@outlook.com',
-    address: 'Gramvej 7, 8660 Skanderborg, Danmark',
+    address: 'Danmark-baseret, arbejder globalt',
     cvr: 'CVR 45019608',
     form: {
       name: 'Dit navn',
@@ -93,6 +93,6 @@ export const da = {
   },
   footer: {
     copy: '© 2026 Fenix Nordic Solutions',
-    reg: 'CVR 45019608 · Gramvej 7, 8660 Skanderborg',
+    reg: 'CVR 45019608 · Danmark',
   },
 }
