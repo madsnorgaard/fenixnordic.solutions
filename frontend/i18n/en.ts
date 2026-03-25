@@ -62,8 +62,8 @@ export const en = {
     label: 'Who we are',
     heading: 'Phoenix Nørgaard',
     paragraphs: [
-      'Before writing a line of code, Phoenix spent years as a documentary photographer. That work demanded one discipline above all: see the situation clearly, then communicate without noise.',
-      'She brought that discipline into digital delivery. Fifteen years of international work across logistics, creative production, and open source IT. SCRUM certified. Experienced in the gap between what a client asks for and what they actually need.',
+      'Phoenix has spent fifteen years building things that actually ship. Creative productions with SoldierMuse in Cape Town. Supply chain operations at Hummel International in Denmark. Now leading the digital transformation of South African History Online from Skanderborg.',
+      'The consistent thread: closing the gap between what a project promises and what it delivers. SCRUM-certified. Experienced managing distributed international teams. Comfortable in the space where creative direction and operational precision meet.',
       'Fenix Nordic is a one-person consultancy. You work directly with Phoenix on every project. No account managers, no handoffs. Every engagement starts with a shared definition of done.',
     ],
     stats: [
@@ -88,10 +88,11 @@ export const en = {
       message: 'How can we help?',
       submit: 'Send message',
       success: 'Message sent. We will be in touch soon.',
+      error: 'Something went wrong. Please try again or email us directly.',
     },
   },
   footer: {
-    copy: '© 2025 Fenix Nordic Solutions',
+    copy: '© 2026 Fenix Nordic Solutions',
     reg: 'CVR 45019608 · Gramvej 7, 8660 Skanderborg',
   },
 }

@@ -20,7 +20,7 @@ const { el: magServices } = useMagnetic(0.25)
       <p class="hero-tagline hero-anim d5">{{ t.hero.tagline }}</p>
 
       <div class="hero-ctas hero-anim d6">
-        <a ref="magServices" href="#services" class="btn-ghost">
+        <a ref="magServices" href="#how" class="btn-ghost">
           {{ t.hero.cta_services }}
           <span class="arrow" aria-hidden="true">↓</span>
         </a>

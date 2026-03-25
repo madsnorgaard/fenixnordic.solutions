@@ -2,31 +2,41 @@
 const t = useT()
 const { el, isVisible } = useReveal()
 
-const form = reactive({ name: '', company: '', email: '', message: '' })
+const form = reactive({ name: '', company: '', email: '', message: '', website: '' })
 const submitted = ref(false)
 const submitting = ref(false)
+const errorMsg = ref('')
 
-const handleSubmit = (e: Event) => {
+const handleSubmit = async (e: Event) => {
   e.preventDefault()
   submitting.value = true
+  errorMsg.value = ''
 
-  const subject = `Enquiry from ${form.name}${form.company ? ` at ${form.company}` : ''}`
-  const body = [
-    `From: ${form.name}`,
-    form.company ? `Company: ${form.company}` : null,
-    `Email: ${form.email}`,
-    '',
-    form.message,
-  ]
-    .filter(Boolean)
-    .join('\n')
+  try {
+    const res = await fetch('https://madsnorgaard.net/wp-json/fenix/v1/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:    form.name,
+        company: form.company,
+        email:   form.email,
+        message: form.message,
+        website: form.website, // honeypot — real users leave this blank
+      }),
+    })
 
-  window.location.href = `mailto:phoenixnorgaard@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    const data = await res.json()
 
-  setTimeout(() => {
-    submitting.value = false
+    if (!res.ok || data?.status !== 'ok') {
+      throw new Error(data?.message || 'send failed')
+    }
+
     submitted.value = true
-  }, 400)
+  } catch {
+    errorMsg.value = t.contact.form.error
+  } finally {
+    submitting.value = false
+  }
 }
 </script>
 
@@ -74,6 +84,12 @@ const handleSubmit = (e: Event) => {
             </div>
 
             <form v-else class="contact-form" @submit.prevent="handleSubmit" novalidate>
+              <!-- Honeypot: hidden from real users, bots fill it in -->
+              <div class="hp-field" aria-hidden="true">
+                <label for="website">Website</label>
+                <input id="website" v-model="form.website" type="text" name="website" tabindex="-1" autocomplete="off" />
+              </div>
+
               <div class="form-row">
                 <div class="form-group">
                   <label class="form-label" for="name">{{ t.contact.form.name }}</label>
@@ -124,9 +140,11 @@ const handleSubmit = (e: Event) => {
                 />
               </div>
 
+              <p v-if="errorMsg" class="form-error" role="alert">{{ errorMsg }}</p>
+
               <button type="submit" class="btn-primary submit-btn" :disabled="submitting">
-                <span>{{ t.contact.form.submit }}</span>
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <span>{{ submitting ? '…' : t.contact.form.submit }}</span>
+                <svg v-if="!submitting" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                   <path d="M1 7h12M7.5 1.5L13 7l-5.5 5.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </button>
@@ -145,7 +163,6 @@ const handleSubmit = (e: Event) => {
   position: relative;
 }
 
-/* Subtle ember glow at bottom of page */
 .contact-section::after {
   content: '';
   position: absolute;
@@ -165,7 +182,6 @@ const handleSubmit = (e: Event) => {
   align-items: start;
 }
 
-/* Left */
 .contact-heading {
   font-family: var(--font-display);
   font-weight: 300;
@@ -219,11 +235,22 @@ a.detail-item:hover { color: var(--text); }
   margin-top: 1px;
 }
 
-/* Right: form */
 .contact-form {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+}
+
+/* Honeypot — invisible to real users */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .form-row {
@@ -237,6 +264,14 @@ a.detail-item:hover { color: var(--text); }
   margin-top: 0.5rem;
 }
 
+.form-error {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: var(--accent-light);
+  line-height: 1.5;
+}
+
 .form-success {
   display: flex;
   flex-direction: column;
@@ -248,9 +283,7 @@ a.detail-item:hover { color: var(--text); }
   border-radius: 2px;
 }
 
-.success-icon {
-  color: var(--accent);
-}
+.success-icon { color: var(--accent); }
 
 .form-success p {
   font-family: var(--font-body);
@@ -259,22 +292,13 @@ a.detail-item:hover { color: var(--text); }
   color: var(--text-muted);
 }
 
-/* Transition */
 .fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
+.fade-leave-active { transition: opacity 0.3s ease; }
 .fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
+.fade-leave-to { opacity: 0; }
 
 @media (max-width: 768px) {
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-  .form-row {
-    grid-template-columns: 1fr;
-  }
+  .contact-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
 }
 </style>

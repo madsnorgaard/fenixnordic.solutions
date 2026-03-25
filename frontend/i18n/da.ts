@@ -62,9 +62,9 @@ export const da = {
     label: 'Hvem vi er',
     heading: 'Phoenix Nørgaard',
     paragraphs: [
-      'Inden Phoenix skrev en linje kode, brugte hun år som dokumentarfotograf. Det arbejde krævede én disciplin frem for alt: se situationen klart, kommuniker derefter uden støj.',
-      'Den disciplin tog hun med ind i digital levering. Femten års internationalt arbejde inden for logistik, kreativ produktion og open source IT. SCRUM-certificeret. Erfaren i hullet mellem det, en klient beder om, og det, de faktisk har brug for.',
-      'Fenix Nordic er en enkeltpersonsvirksomhed. Du arbejder direkte med Phoenix på hvert projekt. Ingen account managers, ingen videregivelser. Hvert samarbejde starter med en fælles definition af færdigt.',
+      'Phoenix har brugt femten år på at bygge ting, der rent faktisk bliver leveret. Kreative produktioner med SoldierMuse i Cape Town. Supply chain-drift hos Hummel International i Danmark. Nu leder hun den digitale transformation af South African History Online fra Skanderborg.',
+      'Den røde tråd: at lukke hullet mellem det, et projekt lover, og det, der faktisk leveres. SCRUM-certificeret. Erfaren i at lede distribuerede internationale teams. Hjemme i det rum, hvor kreativ retning og operationel præcision mødes.',
+      'Fenix Nordic er en enkeltpersonsvirksomhed. Du arbejder direkte med Phoenix på hvert projekt. Ingen account managers, ingen videregivelser. Hvert samarbejde starter med en fælles definition of done.',
     ],
     stats: [
       { value: '15+', label: 'års international erfaring' },
@@ -88,10 +88,11 @@ export const da = {
       message: 'Hvordan kan vi hjælpe?',
       submit: 'Send besked',
       success: 'Besked sendt. Vi vender tilbage snarest.',
+      error: 'Noget gik galt. Prøv igen eller skriv direkte til os.',
     },
   },
   footer: {
-    copy: '© 2025 Fenix Nordic Solutions',
+    copy: '© 2026 Fenix Nordic Solutions',
     reg: 'CVR 45019608 · Gramvej 7, 8660 Skanderborg',
   },
 }
