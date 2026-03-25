@@ -4,51 +4,73 @@ export const da = {
   },
   hero: {
     label: 'Fenix Nordic Solutions · CVR 45019608',
-    line1: 'Vi leverer',
-    line2: 'resultater.',
-    tagline: 'Projektledelse, logistik og IT-løsninger til ambitiøse virksomheder.',
-    cta_services: 'Vores ydelser',
-    cta_contact: 'Kontakt os',
+    line1: 'Definer det.',
+    line2: 'Byg det.',
+    line3: 'Lever det.',
+    tagline: 'Digital levering til ambitiøse virksomheder. Open source teknologi, AI-assisterede arbejdsgange og acceptkriterier, der sikrer at alle ved, hvad færdigt betyder, inden koden skrives.',
+    cta_services: 'Sådan arbejder vi',
+    cta_contact: 'Start en samtale',
   },
-  services: {
-    label: 'Hvad vi gør',
-    heading: 'Fire måder vi leverer på',
-    items: [
+  how: {
+    label: 'Proces',
+    heading: 'Klarhed før kode',
+    steps: [
       {
         number: '01',
-        title: 'Digital Projektledelse',
-        body: 'SCRUM-certificeret ledelse af digitale transformationsprojekter. Vi planlægger, koordinerer og leverer fra kickoff til lancering.',
+        title: 'Definer',
+        body: 'Vi dokumenterer acceptkriterier i fællesskab, inden arbejdet begynder. Du ved præcis, hvad du får, hvornår du får det, og hvordan det testes.',
       },
       {
         number: '02',
-        title: 'Logistik og Forsyningskæde',
-        body: 'Forsyningskædeoptimering, ERP-systemer, tolddokumentation og leverandørstyring på tværs af grænser.',
+        title: 'Byg',
+        body: 'Open source stak. AI-assisteret udvikling for hurtighed og konsistens. Transparent fremdrift, dokumenterede beslutninger, ingen overraskelser.',
       },
       {
         number: '03',
-        title: 'Applikationstest og QA',
-        body: 'Systematisk kvalitetssikring af webløsninger og forretningsapplikationer. Vi finder fejlene, inden dine kunder gør det.',
+        title: 'Lever',
+        body: 'Vi lukker ikke et sprint, før kriterierne er opfyldt. Hvert leveringsemne er testbart, dokumenteret og dit at eje.',
+      },
+    ],
+  },
+  services: {
+    label: 'Hvad vi bygger',
+    heading: 'Fire kompetencer',
+    items: [
+      {
+        number: '01',
+        title: 'Hjemmesider og Digitale Platforme',
+        body: 'Headless CMS, statiske sider og Nuxt eller Vue frontends. Hurtige, vedligeholdelsesvenlige og bygget på open source, så du aldrig er låst inde.',
+      },
+      {
+        number: '02',
+        title: 'Systemintegration',
+        body: 'Forbind dine værktøjer. API-design, automatisering og dataflows mellem Drupal, WordPress, ERP-systemer og specialbyggede løsninger.',
+      },
+      {
+        number: '03',
+        title: 'AI-Assisteret Implementering',
+        body: 'Vi bruger AI i hele arbejdsgangen: scope, acceptkriterier, kodereview og QA. Hurtigere levering, færre antagelser, ensartet output.',
       },
       {
         number: '04',
-        title: 'Open Source IT-løsninger',
-        body: 'Selvhostet infrastruktur, websites og digitale værktøjer bygget på open source. Fleksibelt, sikkert og dit at eje.',
+        title: 'Projekt og Leveringsstyring',
+        body: 'SCRUM-certificeret koordinering fra kickoff til lancering. Definerede sprints, klart ejerskab og interessentalignment i alle faser.',
       },
     ],
   },
   about: {
-    label: 'Hvorfor os',
-    heading: 'Hvorfor Fenix Nordic',
+    label: 'Hvem vi er',
+    heading: 'Phoenix Nørgaard',
     paragraphs: [
-      'Fenix Nordic Solutions kombinerer 15 års international erfaring inden for kreativ projektledelse med praktisk logistikerfaring og dyb viden om open source IT.',
-      'Vi arbejder med små og mellemstore virksomheder, der har brug for reelle resultater uden enterprise-overhead. Fjernarbejdskapable og lokalt forankret i Skanderborg.',
-      'Modersmål engelsk, konversationsdansk. Vi bygger bro mellem international ambition og lokal eksekvering.',
+      'Inden Phoenix skrev en linje kode, brugte hun år som dokumentarfotograf. Det arbejde krævede én disciplin frem for alt: se situationen klart, kommuniker derefter uden støj.',
+      'Den disciplin tog hun med ind i digital levering. Femten års internationalt arbejde inden for logistik, kreativ produktion og open source IT. SCRUM-certificeret. Erfaren i hullet mellem det, en klient beder om, og det, de faktisk har brug for.',
+      'Fenix Nordic er en enkeltpersonsvirksomhed. Du arbejder direkte med Phoenix på hvert projekt. Ingen account managers, ingen videregivelser. Hvert samarbejde starter med en fælles definition af færdigt.',
     ],
     stats: [
       { value: '15+', label: 'års international erfaring' },
       { value: 'SCRUM', label: 'certificeret projektledelse' },
-      { value: 'EN · DA', label: 'Engelsk modersmål, dansk B1' },
-      { value: 'DK', label: 'Skanderborg-baseret, globalt kapabel' },
+      { value: 'EN · DA', label: 'Engelsk modersmål, dansk konversation' },
+      { value: 'DK', label: 'Skanderborg, globalt tilgængelig' },
     ],
   },
   contact: {

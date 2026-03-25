@@ -14,11 +14,12 @@ const { el: magServices } = useMagnetic(0.25)
       <h1 class="hero-headline">
         <span class="hero-line hero-anim d2">{{ t.hero.line1 }}</span>
         <span class="hero-line hero-anim d3">{{ t.hero.line2 }}</span>
+        <span v-if="t.hero.line3" class="hero-line hero-anim d4">{{ t.hero.line3 }}</span>
       </h1>
 
-      <p class="hero-tagline hero-anim d4">{{ t.hero.tagline }}</p>
+      <p class="hero-tagline hero-anim d5">{{ t.hero.tagline }}</p>
 
-      <div class="hero-ctas hero-anim d5">
+      <div class="hero-ctas hero-anim d6">
         <a ref="magServices" href="#services" class="btn-ghost">
           {{ t.hero.cta_services }}
           <span class="arrow" aria-hidden="true">↓</span>

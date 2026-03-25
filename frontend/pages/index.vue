@@ -2,6 +2,7 @@
   <main>
     <TheNav />
     <HeroSection />
+    <HowWeWorkSection />
     <ServicesSection />
     <AboutSection />
     <ContactSection />

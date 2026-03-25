@@ -4,51 +4,73 @@ export const en = {
   },
   hero: {
     label: 'Fenix Nordic Solutions · CVR 45019608',
-    line1: 'We get',
-    line2: 'things done.',
-    tagline: 'Project management, logistics and IT solutions for ambitious businesses.',
-    cta_services: 'Our services',
-    cta_contact: 'Get in touch',
+    line1: 'Define it.',
+    line2: 'Build it.',
+    line3: 'Ship it.',
+    tagline: 'Digital delivery for ambitious businesses. Open source technology, AI-assisted workflows, and acceptance criteria so everyone knows what done looks like before a line of code is written.',
+    cta_services: 'How we work',
+    cta_contact: 'Start a conversation',
   },
-  services: {
-    label: 'What we do',
-    heading: 'Four ways we deliver',
-    items: [
+  how: {
+    label: 'Process',
+    heading: 'Clarity before code',
+    steps: [
       {
         number: '01',
-        title: 'Digital Project Management',
-        body: 'SCRUM-certified leadership for digital transformation. We plan, coordinate and deliver from kickoff to launch.',
+        title: 'Define',
+        body: 'We document acceptance criteria together before work begins. You know exactly what you are getting, when you are getting it, and how it will be tested.',
       },
       {
         number: '02',
-        title: 'Logistics and Supply Chain',
-        body: 'Supply chain optimisation, ERP systems, customs documentation and vendor management across borders.',
+        title: 'Build',
+        body: 'Open source stack. AI-assisted development for speed and consistency. Transparent progress, documented decisions, no surprises mid-sprint.',
       },
       {
         number: '03',
-        title: 'Application Testing and QA',
-        body: 'Systematic quality assurance for web and business applications. We find what breaks before your clients do.',
+        title: 'Deliver',
+        body: 'We do not close a sprint until the criteria are met. Every deliverable is testable, documented, and yours to own.',
+      },
+    ],
+  },
+  services: {
+    label: 'What we build',
+    heading: 'Four capabilities',
+    items: [
+      {
+        number: '01',
+        title: 'Websites and Digital Platforms',
+        body: 'Headless CMS, static sites, and Nuxt or Vue frontends. Fast, maintainable, and built on open source so you are never locked in to a vendor or platform.',
+      },
+      {
+        number: '02',
+        title: 'System Integration',
+        body: 'Connect your tools. API design, automation, and data flows between Drupal, WordPress, ERPs, and custom systems. We build the pipes that make platforms talk.',
+      },
+      {
+        number: '03',
+        title: 'AI-Assisted Implementation',
+        body: 'We use AI throughout the workflow: scoping, acceptance criteria, code review, and QA. Faster delivery, fewer assumptions, consistent output.',
       },
       {
         number: '04',
-        title: 'Open Source IT Solutions',
-        body: 'Self-hosted infrastructure, websites and digital tools built on open source. Flexible, secure and yours to own.',
+        title: 'Project and Delivery Management',
+        body: 'SCRUM-certified coordination from kickoff to launch. Defined sprints, clear ownership, and stakeholder alignment at every stage.',
       },
     ],
   },
   about: {
-    label: 'Why us',
-    heading: 'Why Fenix Nordic',
+    label: 'Who we are',
+    heading: 'Phoenix Nørgaard',
     paragraphs: [
-      'Fenix Nordic Solutions brings together 15 years of international project and creative management with hands-on logistics expertise and deep knowledge in open source IT.',
-      'We work with small and medium businesses that need real results without enterprise overhead. Remote-capable, locally based in Skanderborg.',
-      'Native English, conversational Danish. We bridge the gap between international ambition and local execution.',
+      'Before writing a line of code, Phoenix spent years as a documentary photographer. That work demanded one discipline above all: see the situation clearly, then communicate without noise.',
+      'She brought that discipline into digital delivery. Fifteen years of international work across logistics, creative production, and open source IT. SCRUM certified. Experienced in the gap between what a client asks for and what they actually need.',
+      'Fenix Nordic is a one-person consultancy. You work directly with Phoenix on every project. No account managers, no handoffs. Every engagement starts with a shared definition of done.',
     ],
     stats: [
       { value: '15+', label: 'years international experience' },
       { value: 'SCRUM', label: 'certified project management' },
       { value: 'EN · DA', label: 'English native, Danish conversational' },
-      { value: 'DK', label: 'Skanderborg based, globally capable' },
+      { value: 'DK', label: 'Skanderborg, available globally' },
     ],
   },
   contact: {
