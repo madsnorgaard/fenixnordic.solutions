@@ -7,7 +7,7 @@ const { el: magMark } = useMagnetic(0.3)
   <footer class="footer">
     <div class="container footer-inner">
       <a ref="magMark" href="#" aria-label="Back to top" class="footer-mark">
-        <PhoenixMark :size="32" />
+        <PhoenixMark :size="40" />
       </a>
       <span class="footer-reg">{{ t.footer.reg }}</span>
       <span class="footer-copy">{{ t.footer.copy }}</span>

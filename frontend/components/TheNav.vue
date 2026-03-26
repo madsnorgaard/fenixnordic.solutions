@@ -84,9 +84,22 @@ onMounted(() => {
 .wordmark-mark {
   color: var(--accent);
   flex-shrink: 0;
+  opacity: 0.6;
   transition: color 0.2s ease;
+  animation: ember-glow 4s ease-in-out infinite;
+  will-change: filter, opacity;
 }
-.wordmark:hover .wordmark-mark { color: var(--accent-light); }
+.wordmark:hover .wordmark-mark {
+  color: var(--accent-light);
+  opacity: 1;
+  animation: none;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 60%, transparent));
+}
+
+@keyframes ember-glow {
+  0%, 100% { opacity: 0.6; filter: none; }
+  50%       { opacity: 0.9; filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 50%, transparent)); }
+}
 
 .nav-controls {
   display: flex;

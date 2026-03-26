@@ -208,15 +208,27 @@ const handleSubmit = async (e: Event) => {
   top: 50%;
   right: 8%;
   color: var(--accent);
-  opacity: 0.045;
+  opacity: 0.07;
   pointer-events: none;
-  will-change: transform;
+  will-change: filter, opacity;
   transition: opacity 0.6s ease;
   z-index: 0;
+  animation: watermark-radiate 6s ease-in-out infinite;
 }
 
 .contact-section:hover .contact-watermark {
-  opacity: 0.075;
+  opacity: 0.14;
+  animation: watermark-radiate-hover 4s ease-in-out infinite;
+}
+
+@keyframes watermark-radiate {
+  0%, 100% { opacity: 0.07; filter: none; }
+  50%       { opacity: 0.11; filter: drop-shadow(0 0 24px color-mix(in srgb, var(--accent) 35%, transparent)); }
+}
+
+@keyframes watermark-radiate-hover {
+  0%, 100% { opacity: 0.12; filter: drop-shadow(0 0 12px color-mix(in srgb, var(--accent) 25%, transparent)); }
+  50%       { opacity: 0.18; filter: drop-shadow(0 0 32px color-mix(in srgb, var(--accent) 50%, transparent)); }
 }
 
 .contact-section::after {
