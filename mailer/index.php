@@ -15,8 +15,10 @@ if (strpos($ct, 'application/json') === false) {
 }
 
 // Rate limit: 3 submissions per 10 minutes per IP
+// Use X-Forwarded-For (set by Traefik/Cloudflare) over REMOTE_ADDR (Traefik internal)
 if (function_exists('apcu_fetch')) {
-    $ip  = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $forwarded = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '';
+    $ip  = $forwarded ? trim(explode(',', $forwarded)[0]) : ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
     $key = 'fenix_rl_' . md5($ip);
     $count = apcu_fetch($key, $exists);
     if (!$exists) {
@@ -31,8 +33,10 @@ if (function_exists('apcu_fetch')) {
     }
 }
 
-$body = json_decode(file_get_contents('php://input'), true);
+$raw  = file_get_contents('php://input');
+$body = json_decode($raw, true);
 if (!is_array($body)) {
+    error_log('Fenix mailer: invalid JSON body — ' . substr($raw, 0, 200));
     http_response_code(400);
     exit(json_encode(['error' => 'Invalid request']));
 }
@@ -49,6 +53,7 @@ $message = trim(strip_tags($body['message'] ?? ''));
 $company = trim(strip_tags($body['company'] ?? ''));
 
 if (!$name || !$email || !$message) {
+    error_log("Fenix mailer: validation failed — name=" . (bool)$name . " email=" . (bool)$email . " msg=" . (bool)$message);
     http_response_code(400);
     exit(json_encode(['error' => 'Required fields missing']));
 }
