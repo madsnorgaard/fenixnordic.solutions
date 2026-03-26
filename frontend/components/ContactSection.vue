@@ -33,7 +33,7 @@ const handleSubmit = async (e: Event) => {
 
     submitted.value = true
   } catch {
-    errorMsg.value = t.contact.form.error
+    errorMsg.value = t.value.contact.form.error
   } finally {
     submitting.value = false
   }
