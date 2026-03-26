@@ -2,6 +2,37 @@
 const t = useT()
 const { el, isVisible } = useReveal()
 
+// Parallax watermark - reuses el from useReveal to get section bounds
+const markX = ref(0)
+const markY = ref(0)
+let rafId = 0
+let targetX = 0
+let targetY = 0
+
+function onMouseMove(e: MouseEvent) {
+  const section = el.value as HTMLElement | null
+  if (!section) return
+  const r = section.getBoundingClientRect()
+  if (e.clientY < r.top || e.clientY > r.bottom) return
+  targetX = (e.clientX - r.left) / r.width  - 0.5
+  targetY = (e.clientY - r.top)  / r.height - 0.5
+}
+
+function animateMark() {
+  markX.value += (targetX - markX.value) * 0.06
+  markY.value += (targetY - markY.value) * 0.06
+  rafId = requestAnimationFrame(animateMark)
+}
+
+onMounted(() => {
+  window.addEventListener('mousemove', onMouseMove, { passive: true })
+  animateMark()
+})
+onUnmounted(() => {
+  window.removeEventListener('mousemove', onMouseMove)
+  cancelAnimationFrame(rafId)
+})
+
 const form = reactive({ name: '', company: '', email: '', message: '', website: '' })
 const submitted = ref(false)
 const submitting = ref(false)
@@ -42,6 +73,14 @@ const handleSubmit = async (e: Event) => {
 
 <template>
   <section id="contact" :ref="el" :class="['contact-section reveal', { 'in-view': isVisible }]">
+    <!-- Parallax watermark -->
+    <PhoenixMark
+      :size="320"
+      class="contact-watermark"
+      :style="{
+        transform: `translate(calc(-50% + ${markX * -28}px), calc(-50% + ${markY * -20}px))`
+      }"
+    />
     <div class="container">
       <div class="contact-grid">
         <!-- Left: details -->
@@ -161,6 +200,23 @@ const handleSubmit = async (e: Event) => {
   padding: var(--section-py) 0;
   border-top: 1px solid var(--border);
   position: relative;
+  overflow: hidden;
+}
+
+.contact-watermark {
+  position: absolute;
+  top: 50%;
+  right: 8%;
+  color: var(--accent);
+  opacity: 0.045;
+  pointer-events: none;
+  will-change: transform;
+  transition: opacity 0.6s ease;
+  z-index: 0;
+}
+
+.contact-section:hover .contact-watermark {
+  opacity: 0.075;
 }
 
 .contact-section::after {
@@ -176,6 +232,8 @@ const handleSubmit = async (e: Event) => {
 }
 
 .contact-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 44fr 56fr;
   gap: clamp(3rem, 6vw, 6rem);

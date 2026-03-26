@@ -1,10 +1,14 @@
 <script setup lang="ts">
 const t = useT()
+const { el: magMark } = useMagnetic(0.3)
 </script>
 
 <template>
   <footer class="footer">
     <div class="container footer-inner">
+      <a ref="magMark" href="#" aria-label="Back to top" class="footer-mark">
+        <PhoenixMark :size="32" />
+      </a>
       <span class="footer-reg">{{ t.footer.reg }}</span>
       <span class="footer-copy">{{ t.footer.copy }}</span>
     </div>
@@ -32,6 +36,27 @@ const t = useT()
   font-weight: 300;
   letter-spacing: 0.04em;
   color: var(--text-dim);
+}
+
+.footer-mark {
+  display: flex;
+  align-items: center;
+  color: var(--accent);
+  opacity: 0.5;
+  text-decoration: none;
+  animation: ember-glow 4s ease-in-out infinite;
+  will-change: filter, opacity;
+}
+
+.footer-mark:hover {
+  opacity: 1;
+  animation: none;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent) 60%, transparent));
+}
+
+@keyframes ember-glow {
+  0%, 100% { opacity: 0.5; filter: none; }
+  50%       { opacity: 0.72; filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 40%, transparent)); }
 }
 
 @media (max-width: 640px) {
