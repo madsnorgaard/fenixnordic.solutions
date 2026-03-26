@@ -16,7 +16,7 @@ onMounted(() => {
   <nav :class="['nav', { scrolled: isScrolled }]" role="navigation" aria-label="Main navigation">
     <div class="nav-inner container">
       <a href="/" class="wordmark" aria-label="Fenix Nordic Solutions home">
-        <PhoenixMark :size="16" class="wordmark-mark" />
+        <PhoenixMark :size="22" class="wordmark-mark" />
         Fenix Nordic
       </a>
 
