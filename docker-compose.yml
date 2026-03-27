@@ -24,29 +24,6 @@ services:
     networks:
       - internal
 
-  phpmyadmin:
-    container_name: fenix_db_admin
-    image: phpmyadmin/phpmyadmin
-    env_file:
-    - .env
-    ports:
-      - 9899:80
-    restart: always
-    user: "1000"
-    environment:
-      PMA_HOST: "${DB_HOST}"
-      PMA_USER: "${DB_USER}"
-      PMA_PASSWORD: "${DB_PASS}"
-      PMA_ARBITRARY: "1"
-    labels:
-      - "traefik.http.routers.fenix_phpmyadmin.rule=Host(`phpmyadmin.fenixnordic.solutions`)"
-      - "traefik.http.routers.fenix_phpmyadmin.tls=true"
-      - "traefik.http.routers.fenix_phpmyadmin.tls.certresolver=lets-encrypt"
-    networks:
-      - internal
-      - web
-    depends_on:
-      - fenix_db
 
   nuxt:
     container_name: fenix_nuxt
