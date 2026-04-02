@@ -26,6 +26,16 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
       ],
+      script: [
+        {
+          defer: true,
+          'data-domain': 'fenixnordic.solutions',
+          src: 'https://analytics.theazanianprepper.online/js/script.file-downloads.hash.outbound-links.js',
+        },
+        {
+          innerHTML: "window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }",
+        },
+      ],
     },
   },
   nitro: {
