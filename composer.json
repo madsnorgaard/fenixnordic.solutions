@@ -22,7 +22,7 @@
         "drupal/core-composer-scaffold": "^11",
         "drupal/core-project-message": "^11",
         "drupal/core-recommended": "^11",
-        "drupal/gin": "^3.0@beta",
+        "drupal/gin": "^4.0@beta",
         "drupal/gin_toolbar": "^1.0@RC",
         "drupal/pathauto": "^1.13",
         "drupal/radix": "^6.0@RC",
