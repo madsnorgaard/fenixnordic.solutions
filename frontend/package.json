@@ -11,12 +11,7 @@
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.2.11",
     "@fontsource/dm-sans": "^5.2.8",
-<<<<<<< dependabot/npm_and_yarn/frontend/nuxt-4.4.2
-    "nuxt": "^4.4.2",
-    "vue": "^3.5.0"
-=======
     "nuxt": "^3.13.0",
-    "vue": "^3.5.32"
->>>>>>> main
+    "vue": "^3.5.0"
   }
 }
