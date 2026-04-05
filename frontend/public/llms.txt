@@ -1,0 +1,30 @@
+# Fenix Nordic Solutions
+
+> Digital delivery for ambitious businesses. Open source technology, AI-assisted workflows, and acceptance criteria agreed before work begins. Based in Skanderborg, Denmark.
+
+## About
+
+Fenix Nordic Solutions is a digital consultancy based in Skanderborg, Denmark. The company delivers web development, DevOps, and infrastructure services using open-source technology. Every project starts with agreed acceptance criteria before work begins, ensuring transparent delivery and predictable outcomes.
+
+## Services
+
+- Web development (Drupal, WordPress, Nuxt/Vue, PHP, Node.js)
+- DevOps and infrastructure (Docker, Linux, CI/CD, self-hosted servers)
+- AI-assisted development workflows
+- Technical consulting and architecture
+
+## Approach
+
+- Open-source first: no vendor lock-in
+- Acceptance criteria agreed upfront
+- AI-assisted workflows for efficiency
+- Transparent pricing and delivery
+
+## Location
+
+Skanderborg, Denmark
+
+## Contact
+
+- Website: https://fenixnordic.solutions
+- Email: Available via website contact form
