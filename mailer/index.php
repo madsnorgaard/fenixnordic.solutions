@@ -101,7 +101,7 @@ curl_setopt_array($ch, [
 
 $result = curl_exec($ch);
 $code   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
+
 
 if ($code === 200) {
     error_log("Fenix mailer: Mailgun OK — {$result}");
