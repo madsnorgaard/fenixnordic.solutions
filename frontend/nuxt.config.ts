@@ -60,6 +60,25 @@ export default defineNuxtConfig({
       ],
     },
   },
+  routeRules: {
+    '/**': {
+      headers: {
+        'Content-Security-Policy': [
+          "default-src 'self'",
+          "script-src 'self' 'unsafe-inline' https://analytics.theazanianprepper.online",
+          "style-src 'self' 'unsafe-inline'",
+          "font-src 'self' data:",
+          "img-src 'self' data:",
+          "connect-src 'self' https://analytics.theazanianprepper.online",
+          "frame-ancestors 'none'",
+          "base-uri 'self'",
+          "form-action 'self'",
+          "upgrade-insecure-requests",
+        ].join('; '),
+      },
+    },
+  },
+
   nitro: {
     prerender: {
       routes: ['/'],
