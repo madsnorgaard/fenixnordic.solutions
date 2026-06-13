@@ -58,20 +58,39 @@ export const da = {
       },
     ],
   },
-  product: {
-    label: 'Produkt',
-    name: 'AabenIntra',
-    heading: 'Intranettet dit team faktisk åbner',
-    paragraphs: [
-      'AabenIntra er vores intranet til organisationer og mindre virksomheder - ét sted til nyheder, dokumenter, mennesker og de daglige værktøjer, dit team er afhængigt af. Bygget på de samme principper som alt andet, vi laver: open source i kernen og jeres data på infrastruktur, I selv ejer.',
-      'Tilgangen bygger på mange års arbejde med intranet og medarbejderoplevelse - blandt andet en prisvindende dansk arbejdsplads anerkendt for medarbejdertilfredshed. Et intranet betaler først sin pris, når folk rent faktisk åbner det - og det er præcis det, vi designer efter.',
+  products: {
+    label: 'Produkter',
+    intro: 'Open source-produkter, I selv ejer - ikke licensaftaler, I lejer.',
+    items: [
+      {
+        name: 'AabenForms',
+        heading: 'Borgerrettede formularer og arbejdsgange - uden licens pr. formular',
+        paragraphs: [
+          'AabenForms er en open source-platform til sikre digitale formularer og sagsgange - MitID-login, Digital Post og de godkendelsesflows, som offentligt og reguleret arbejde afhænger af. De proprietære alternativer tager betaling pr. formular, pr. bruger og pr. integration. Det gør AabenForms ikke.',
+          'Bygget på Drupal og Nuxt og designet til at køre på infrastruktur, I selv styrer. Borgerdata bliver i EU og under jeres governance. I ejer platformen, formularerne og dataene - ikke en leverandør.',
+        ],
+        points: [
+          { title: 'MitID og Digital Post', body: 'Sikkert borgerlogin og officiel post indbygget - ikke faktureret som tilkøb.' },
+          { title: 'Ingen pris pr. formular', body: 'Byg lige så mange formularer og flows, I har brug for. Omkostningen vokser ikke med forbruget.' },
+          { title: 'Open source, selvhostet', body: 'Kører på jeres egne servere eller en europæisk VPS. Auditbar, udvidbar og uden låsning.' },
+        ],
+        status: 'Under aktiv udvikling, med en fungerende MitID- og Digital Post-demo. Kontakt os om et pilotprojekt.',
+      },
+      {
+        name: 'AabenIntra',
+        heading: 'Intranettet dit team faktisk åbner',
+        paragraphs: [
+          'AabenIntra er vores intranet til organisationer og mindre virksomheder - ét sted til nyheder, dokumenter, mennesker og de daglige værktøjer, dit team er afhængigt af. Bygget på de samme principper som alt andet, vi laver: open source i kernen og jeres data på infrastruktur, I selv ejer.',
+          'Tilgangen bygger på mange års arbejde med intranet og medarbejderoplevelse - blandt andet en prisvindende dansk arbejdsplads anerkendt for medarbejdertilfredshed. Et intranet betaler først sin pris, når folk rent faktisk åbner det - og det er præcis det, vi designer efter.',
+        ],
+        points: [
+          { title: 'Ejet, ikke lejet', body: 'Kører på jeres egen hosting eller en europæisk VPS. Ingen licens pr. bruger, ingen data der forlader EU.' },
+          { title: 'Bygget om dine medarbejdere', body: 'Nyheder, profiler, dokumenter og arbejdsgange formet efter, hvordan jeres organisation faktisk arbejder.' },
+          { title: 'Dansk og engelsk', body: 'Tosproget fra bunden - til nordiske teams og internationale arbejdspladser.' },
+        ],
+        status: 'Under udvikling - early access for danske og engelske virksomheder. Kontakt os for at komme med i første hold.',
+      },
     ],
-    points: [
-      { title: 'Ejet, ikke lejet', body: 'Kører på jeres egen hosting eller en europæisk VPS. Ingen licens pr. bruger, ingen data der forlader EU.' },
-      { title: 'Bygget om dine medarbejdere', body: 'Nyheder, profiler, dokumenter og arbejdsgange formet efter, hvordan jeres organisation faktisk arbejder.' },
-      { title: 'Dansk og engelsk', body: 'Tosproget fra bunden - til nordiske teams og internationale arbejdspladser.' },
-    ],
-    status: 'Under udvikling - early access for danske og engelske virksomheder. Kontakt os for at komme med i første hold.',
   },
   about: {
     label: 'Hvem vi er',

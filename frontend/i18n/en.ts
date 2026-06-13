@@ -58,20 +58,39 @@ export const en = {
       },
     ],
   },
-  product: {
-    label: 'Product',
-    name: 'AabenIntra',
-    heading: 'The intranet your team will actually open',
-    paragraphs: [
-      'AabenIntra is our intranet for organisations and small businesses - one place for news, documents, people and the everyday tools your team relies on. Built on the same principles as everything we do: open source at the core, your data on infrastructure you own.',
-      'The approach draws on years of intranet and employee-experience work, including an award-winning Danish workplace recognised for employee satisfaction. An intranet only earns its cost when people open it - so that is exactly what we design for.',
+  products: {
+    label: 'Products',
+    intro: 'Open source products you own, not licence agreements you rent.',
+    items: [
+      {
+        name: 'AabenForms',
+        heading: 'Citizen-facing forms and workflows, without the per-form licence',
+        paragraphs: [
+          'AabenForms is an open source platform for secure digital forms and case workflows - MitID login, Digital Post, and the approval flows that public-sector and regulated work depend on. The proprietary alternatives charge per form, per seat and per integration. AabenForms does not.',
+          'Built on Drupal and Nuxt and designed to run on infrastructure you control, it keeps citizen data in the EU and under your governance. You own the platform, the forms and the data - not a vendor.',
+        ],
+        points: [
+          { title: 'MitID and Digital Post', body: 'Secure citizen login and official correspondence built in, not billed as add-ons.' },
+          { title: 'No per-form pricing', body: 'Build as many forms and flows as you need. The cost does not scale with your usage.' },
+          { title: 'Open source, self-hosted', body: 'Runs on your own servers or a European VPS. Auditable, extendable and free of lock-in.' },
+        ],
+        status: 'In active development, with a working MitID and Digital Post demo. Talk to us about a pilot.',
+      },
+      {
+        name: 'AabenIntra',
+        heading: 'The intranet your team will actually open',
+        paragraphs: [
+          'AabenIntra is our intranet for organisations and small businesses - one place for news, documents, people and the everyday tools your team relies on. Built on the same principles as everything we do: open source at the core, your data on infrastructure you own.',
+          'The approach draws on years of intranet and employee-experience work, including an award-winning Danish workplace recognised for employee satisfaction. An intranet only earns its cost when people open it - so that is exactly what we design for.',
+        ],
+        points: [
+          { title: 'Owned, not rented', body: 'Runs on your own hosting or a European VPS. No per-seat licensing, no data leaving the EU.' },
+          { title: 'Built around your people', body: 'News, profiles, documents and workflows shaped to how your organisation actually works.' },
+          { title: 'Danish and English', body: 'Bilingual from the ground up - for Nordic teams and international workplaces alike.' },
+        ],
+        status: 'In development - early access for Danish and English businesses. Get in touch to join the first cohort.',
+      },
     ],
-    points: [
-      { title: 'Owned, not rented', body: 'Runs on your own hosting or a European VPS. No per-seat licensing, no data leaving the EU.' },
-      { title: 'Built around your people', body: 'News, profiles, documents and workflows shaped to how your organisation actually works.' },
-      { title: 'Danish and English', body: 'Bilingual from the ground up - for Nordic teams and international workplaces alike.' },
-    ],
-    status: 'In development - early access for Danish and English businesses. Get in touch to join the first cohort.',
   },
   about: {
     label: 'Who we are',

@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   site: {
     url: 'https://fenixnordic.solutions',
     name: 'Fenix Nordic Solutions',
-    description: 'We help small and medium businesses cut cloud and licence costs by moving onto European hosting and open source tools they own. IT audits, off-cloud migration, custom software and the AabenIntra intranet. Based in Skanderborg, Denmark.',
+    description: 'We help small and medium businesses cut cloud and licence costs by moving onto European hosting and open source tools they own. IT audits, off-cloud migration, custom software, and the AabenForms and AabenIntra platforms. Based in Skanderborg, Denmark.',
     defaultLocale: 'en',
   },
 
@@ -27,7 +27,7 @@ export default defineNuxtConfig({
       name: 'Fenix Nordic Solutions',
       url: 'https://fenixnordic.solutions',
       logo: 'https://fenixnordic.solutions/favicon.svg',
-      description: 'We help small and medium businesses cut cloud and licence costs by moving onto European hosting and open source tools they own. IT audits, off-cloud migration, custom software and the AabenIntra intranet.',
+      description: 'We help small and medium businesses cut cloud and licence costs by moving onto European hosting and open source tools they own. IT audits, off-cloud migration, custom software, and the AabenForms and AabenIntra platforms.',
       address: {
         type: 'PostalAddress',
         addressLocality: 'Skanderborg',

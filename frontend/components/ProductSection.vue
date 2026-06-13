@@ -4,31 +4,35 @@ const { el, isVisible } = useReveal()
 </script>
 
 <template>
-  <section id="product" :ref="el" :class="['product-section reveal', { 'in-view': isVisible }]">
+  <section id="products" :ref="el" :class="['product-section reveal', { 'in-view': isVisible }]">
     <div class="container">
-      <p class="label">{{ t.product.label }}</p>
+      <p class="label">{{ t.products.label }}</p>
+      <p class="products-intro">{{ t.products.intro }}</p>
 
-      <div class="product-grid">
-        <div class="product-text">
-          <h2 class="product-name">{{ t.product.name }}</h2>
-          <p class="product-heading">{{ t.product.heading }}</p>
-          <div class="product-paragraphs">
-            <p v-for="(para, i) in t.product.paragraphs" :key="i">{{ para }}</p>
+      <template v-for="(product, p) in t.products.items" :key="p">
+        <div v-if="p > 0" class="product-divider" aria-hidden="true" />
+        <div class="product-grid">
+          <div class="product-text">
+            <h2 class="product-name">{{ product.name }}</h2>
+            <p class="product-heading">{{ product.heading }}</p>
+            <div class="product-paragraphs">
+              <p v-for="(para, i) in product.paragraphs" :key="i">{{ para }}</p>
+            </div>
+            <p class="product-status">
+              <span class="status-dot" aria-hidden="true" />
+              {{ product.status }}
+            </p>
           </div>
-          <p class="product-status">
-            <span class="status-dot" aria-hidden="true" />
-            {{ t.product.status }}
-          </p>
-        </div>
 
-        <ul class="product-points">
-          <li v-for="(point, i) in t.product.points" :key="i" class="point-item">
-            <div class="point-accent" aria-hidden="true" />
-            <h3 class="point-title">{{ point.title }}</h3>
-            <p class="point-body">{{ point.body }}</p>
-          </li>
-        </ul>
-      </div>
+          <ul class="product-points">
+            <li v-for="(point, i) in product.points" :key="i" class="point-item">
+              <div class="point-accent" aria-hidden="true" />
+              <h3 class="point-title">{{ point.title }}</h3>
+              <p class="point-body">{{ point.body }}</p>
+            </li>
+          </ul>
+        </div>
+      </template>
     </div>
   </section>
 </template>
@@ -40,7 +44,23 @@ const { el, isVisible } = useReveal()
 }
 
 .product-section > .container > .label {
-  margin-bottom: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 1rem;
+}
+
+.products-intro {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  color: var(--text-muted);
+  max-width: 38ch;
+  line-height: 1.4;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.product-divider {
+  height: 1px;
+  background: var(--border);
+  margin: clamp(3rem, 5vw, 5rem) 0;
 }
 
 .product-grid {
