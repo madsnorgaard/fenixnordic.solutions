@@ -7,56 +7,71 @@ export const da = {
     line1: 'Definer det.',
     line2: 'Byg det.',
     line3: 'Lever det.',
-    tagline: 'Digital levering til ambitiøse virksomheder. Open source teknologi, AI-assisterede arbejdsgange og acceptkriterier, der sikrer at alle ved, hvad færdigt betyder, inden koden skrives.',
+    tagline: 'Vi hjælper små og mellemstore virksomheder med at skære unødige cloud- og licensomkostninger væk - ved at analysere, hvad I reelt har brug for, og flytte jer over på europæisk hosting og open source-værktøjer, I selv ejer.',
     cta_services: 'Sådan arbejder vi',
     cta_contact: 'Start en samtale',
   },
   how: {
     label: 'Proces',
-    heading: 'Klarhed før kode',
+    heading: 'Fra analyse til ejerskab',
     steps: [
       {
         number: '01',
-        title: 'Definer',
-        body: 'Vi dokumenterer acceptkriterier i fællesskab, inden arbejdet begynder. Du ved præcis, hvad du får, hvornår du får det, og hvordan det testes.',
+        title: 'Analysér',
+        body: 'Vi kortlægger jeres licenser, hosting og arbejdsgange og finder, hvor I betaler for infrastruktur, I ikke har brug for. I får et klart billede af omkostningerne og en realistisk plan for at sænke dem.',
       },
       {
         number: '02',
         title: 'Byg',
-        body: 'Open source stak. AI-assisteret udvikling for hurtighed og konsistens. Transparent fremdrift, dokumenterede beslutninger, ingen overraskelser.',
+        body: 'Vi flytter jer over på rigtigt dimensioneret europæisk hosting og open source-værktøjer og bygger de specifikke applikationer, jeres arbejdsgang kræver. Vi bruger AI, hvor det fremskynder leveringen - aldrig hvor det øger risikoen.',
       },
       {
         number: '03',
-        title: 'Lever',
-        body: 'Vi lukker ikke et sprint, før kriterierne er opfyldt. Hvert leveringsemne er testbart, dokumenteret og dit at eje.',
+        title: 'Ej',
+        body: 'Hvert system er dokumenteret, testbart og jeres at drive. Ingen leverandørlåsning, ingen overraskelser pr. bruger, ingen afhængigheder I ikke kan skære.',
       },
     ],
   },
   services: {
-    label: 'Hvad vi bygger',
-    heading: 'Fire kompetencer',
+    label: 'Hvad vi gør',
+    heading: 'Fire måder vi hjælper',
     items: [
       {
         number: '01',
-        title: 'Hjemmesider og Digitale Platforme',
-        body: 'Headless CMS, statiske sider og Nuxt eller Vue frontends. Hurtige, vedligeholdelsesvenlige og bygget på open source, så du aldrig er låst inde.',
+        title: 'IT-omkostnings- og Licensanalyse',
+        body: 'Vi analyserer jeres softwarelicenser, SaaS-abonnementer og cloud-hosting op mod, hvad virksomheden reelt bruger. I får en prioriteret liste over, hvad der kan skæres, erstattes eller nedskaleres - med besparelsen sat på.',
       },
       {
         number: '02',
-        title: 'Systemintegration',
-        body: 'Forbind dine værktøjer. API-design, automatisering og dataflows mellem Drupal, WordPress, ERP-systemer og specialbyggede løsninger.',
+        title: 'Migrering Væk fra Cloud',
+        body: 'Flyt fra overdimensioneret cloud over på jeres egne servere eller en europæisk VPS. Samme driftssikkerhed til en brøkdel af regningen - og jeres data under jeres kontrol og EU-jurisdiktion.',
       },
       {
         number: '03',
-        title: 'AI-Assisteret Implementering',
-        body: 'Vi bruger AI i hele arbejdsgangen: scope, acceptkriterier, kodereview og QA. Hurtigere levering, færre antagelser, ensartet output.',
+        title: 'Specialbyggede Open Source-løsninger',
+        body: 'Når et dyrt værktøj kun løser en del af problemet, bygger vi den applikation, der løser resten - på open source-fundament, I selv ejer. AI-assisteret levering holder det hurtigt og økonomisk.',
       },
       {
         number: '04',
-        title: 'Projekt og Leveringsstyring',
-        body: 'SCRUM-certificeret koordinering fra kickoff til lancering. Definerede sprints, klart ejerskab og interessentalignment i alle faser.',
+        title: 'Hjemmesider, Platforme og Integration',
+        body: 'Headless CMS, Nuxt- og Vue-frontends og de API-integrationer, der får jeres systemer til at tale sammen. Hurtige, vedligeholdelsesvenlige og uden låsning.',
       },
     ],
+  },
+  product: {
+    label: 'Produkt',
+    name: 'AabenIntra',
+    heading: 'Intranettet dit team faktisk åbner',
+    paragraphs: [
+      'AabenIntra er vores intranet til organisationer og mindre virksomheder - ét sted til nyheder, dokumenter, mennesker og de daglige værktøjer, dit team er afhængigt af. Bygget på de samme principper som alt andet, vi laver: open source i kernen og jeres data på infrastruktur, I selv ejer.',
+      'Tilgangen bygger på mange års arbejde med intranet og medarbejderoplevelse - blandt andet en prisvindende dansk arbejdsplads anerkendt for medarbejdertilfredshed. Et intranet betaler først sin pris, når folk rent faktisk åbner det - og det er præcis det, vi designer efter.',
+    ],
+    points: [
+      { title: 'Ejet, ikke lejet', body: 'Kører på jeres egen hosting eller en europæisk VPS. Ingen licens pr. bruger, ingen data der forlader EU.' },
+      { title: 'Bygget om dine medarbejdere', body: 'Nyheder, profiler, dokumenter og arbejdsgange formet efter, hvordan jeres organisation faktisk arbejder.' },
+      { title: 'Dansk og engelsk', body: 'Tosproget fra bunden - til nordiske teams og internationale arbejdspladser.' },
+    ],
+    status: 'Under udvikling - early access for danske og engelske virksomheder. Kontakt os for at komme med i første hold.',
   },
   about: {
     label: 'Hvem vi er',
@@ -64,7 +79,7 @@ export const da = {
     paragraphs: [
       'Phoenix har brugt femten år på at bygge ting, der rent faktisk bliver leveret. Kreative produktioner med SoldierMuse i Cape Town. Supply chain-drift hos Hummel International i Danmark. Nu leder hun den digitale transformation af South African History Online fra Skanderborg.',
       'Den røde tråd: at lukke hullet mellem det, et projekt lover, og det, der faktisk leveres. SCRUM-certificeret. Erfaren i at lede distribuerede internationale teams. Hjemme i det rum, hvor kreativ retning og operationel præcision mødes.',
-      'Fenix Nordic er en enkeltpersonsvirksomhed. Du arbejder direkte med Phoenix på hvert projekt. Ingen account managers, ingen videregivelser. Hvert samarbejde starter med en fælles definition of done.',
+      'Fenix Nordic er en lille, praktisk konsulentvirksomhed. Du arbejder direkte med dem, der bygger dit projekt. Ingen account managers, ingen videregivelser. Hvert samarbejde starter med en fælles definition of done.',
     ],
     stats: [
       { value: '15+', label: 'års international erfaring' },
@@ -76,12 +91,12 @@ export const da = {
       heading: 'Mads',
       paragraphs: [
         'Senior udvikler og DevOps-ingeniør. Selvlært, femten år med Drupal, PHP, Docker og Linux. Senior udvikler og DevOps-ingeniør hos Eksponent, et dansk udviklingsbureau. Teknisk lead for South African History Online siden 2010.',
-        'Hjemme i alle lag af stacken: fra containerinfrastruktur og CI/CD til headless CMS-arkitektur og frontend. Bygger de systemer, der gør levering pålidelig.',
+        'I dag driver han selvhostet infrastruktur på europæiske servere - netop det skift væk fra dyr cloud, som Fenix tilbyder sine kunder. Hjemme i alle lag af stacken, fra containere og CI/CD til headless CMS og frontend, bygger han de systemer, der gør levering pålidelig og uafhængighed praktisk mulig.',
       ],
       stats: [
         { value: '15+', label: 'år med Drupal og PHP' },
         { value: 'DevOps', label: 'Docker, Linux, CI/CD' },
-        { value: 'Lead', label: 'Open source, teknisk lead siden 2010' },
+        { value: 'Selvhostet', label: 'europæiske servere, ingen cloud-låsning' },
         { value: 'DK', label: 'Skanderborg, Danmark' },
       ],
     },
@@ -89,7 +104,7 @@ export const da = {
   contact: {
     label: 'Kom i kontakt',
     heading: 'Lad os tale.',
-    subheading: 'Fortæl os om dit projekt, og vi vender tilbage inden for en arbejdsdag.',
+    subheading: 'Fortæl os om dit projekt eller din cloud-regning, og vi vender tilbage inden for en arbejdsdag.',
     phone: '+45 26 25 29 89',
     email: 'phoenixnorgaard@outlook.com',
     address: 'Danmark-baseret, arbejder globalt',
