@@ -22,6 +22,16 @@ const { el, isVisible } = useReveal()
               <span class="status-dot" aria-hidden="true" />
               {{ product.status }}
             </p>
+            <a
+              v-if="product.link"
+              :href="product.link.url"
+              class="product-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ product.link.label }}
+              <span class="link-arrow" aria-hidden="true">→</span>
+            </a>
           </div>
 
           <ul class="product-points">
@@ -126,6 +136,26 @@ const { el, isVisible } = useReveal()
   transform: translateY(-0.1rem);
   animation: status-pulse 2.5s ease-in-out infinite;
 }
+
+.product-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  transition: color 0.2s ease;
+}
+.product-link:hover { color: var(--accent-light); }
+
+.link-arrow {
+  font-size: 0.875rem;
+  transition: transform 0.2s ease;
+}
+.product-link:hover .link-arrow { transform: translateX(3px); }
 
 @keyframes status-pulse {
   0%, 100% { opacity: 0.4; box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 40%, transparent); }

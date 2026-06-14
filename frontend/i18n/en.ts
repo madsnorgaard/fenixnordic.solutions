@@ -75,6 +75,7 @@ export const en = {
           { title: 'Open source, self-hosted', body: 'Runs on your own servers or a European VPS. Auditable, extendable and free of lock-in.' },
         ],
         status: 'In active development, with a working MitID and Digital Post demo. Talk to us about a pilot.',
+        link: { url: 'https://aabenforms.dk/', label: 'Visit aabenforms.dk' },
       },
       {
         name: 'AabenIntra',
@@ -89,6 +90,7 @@ export const en = {
           { title: 'Danish and English', body: 'Bilingual from the ground up - for Nordic teams and international workplaces alike.' },
         ],
         status: 'In development - early access for Danish and English businesses. Get in touch to join the first cohort.',
+        link: { url: 'https://github.com/madsnorgaard/AabenIntra', label: 'View on GitHub' },
       },
     ],
   },
