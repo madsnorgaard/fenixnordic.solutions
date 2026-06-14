@@ -58,6 +58,28 @@ export const en = {
       },
     ],
   },
+  cases: {
+    label: 'Cases',
+    heading: 'Open archives, built to last',
+    items: [
+      {
+        name: 'South African History Online',
+        tag: 'Free, open history for the next generation',
+        paragraphs: [
+          'South African History Online is one of the largest free history archives on the continent, and it has stayed free. Mads has been its technical lead since 2010 - now in his sixteenth year of using Drupal to keep the archive in front of the public - while Phoenix leads its ongoing digital transformation.',
+          'The work is about reach: making sure the archive lands with the next generation of readers, students and activists, not only the researchers who already know it is there. We renew and reinforce founder Omar Badsha\'s vision - no paygate, no subscription, history and information freely available to every learner and researcher.',
+          'Open source is what keeps that promise affordable. Drupal, self-hosted infrastructure and no per-user licensing let the archive grow without a growing bill - and without ever putting knowledge behind a wall.',
+        ],
+        meta: [
+          { label: 'Role', value: 'Technical lead and digital transformation' },
+          { label: 'On Drupal', value: 'Since 2010 - sixteenth year' },
+          { label: 'Stack', value: 'Open source, self-hosted' },
+          { label: 'Access', value: 'No paygate, free for all' },
+        ],
+        link: { url: 'https://www.sahistory.org.za/', label: 'Visit sahistory.org.za' },
+      },
+    ],
+  },
   products: {
     label: 'Products',
     intro: 'Open source products you own, not licence agreements you rent.',

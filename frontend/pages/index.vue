@@ -4,6 +4,7 @@
     <HeroSection />
     <HowWeWorkSection />
     <ServicesSection />
+    <CasesSection />
     <ProductSection />
     <AboutSection />
     <ContactSection />

@@ -58,6 +58,28 @@ export const da = {
       },
     ],
   },
+  cases: {
+    label: 'Cases',
+    heading: 'Åbne arkiver, bygget til at holde',
+    items: [
+      {
+        name: 'South African History Online',
+        tag: 'Fri, åben historie til den næste generation',
+        paragraphs: [
+          'South African History Online er et af de største frie historiearkiver på kontinentet - og det er forblevet frit. Mads har været teknisk lead siden 2010 - nu på sit sekstende år med at bruge Drupal til at gøre arkivet tilgængeligt for offentligheden - mens Phoenix leder den løbende digitale transformation.',
+          'Arbejdet handler om rækkevidde: at sikre, at arkivet når den næste generation af læsere, studerende og aktivister - ikke kun de forskere, der allerede kender det. Vi fornyer og styrker grundlægger Omar Badshas vision - ingen betalingsmur, intet abonnement, historie og viden frit tilgængelig for enhver lærende og forsker.',
+          'Open source er det, der holder det løfte økonomisk. Drupal, selvhostet infrastruktur og ingen licens pr. bruger lader arkivet vokse uden en voksende regning - og uden nogensinde at sætte viden bag en mur.',
+        ],
+        meta: [
+          { label: 'Rolle', value: 'Teknisk lead og digital transformation' },
+          { label: 'På Drupal', value: 'Siden 2010 - sekstende år' },
+          { label: 'Stak', value: 'Open source, selvhostet' },
+          { label: 'Adgang', value: 'Ingen betalingsmur, frit for alle' },
+        ],
+        link: { url: 'https://www.sahistory.org.za/', label: 'Besøg sahistory.org.za' },
+      },
+    ],
+  },
   products: {
     label: 'Produkter',
     intro: 'Open source-produkter, I selv ejer - ikke licensaftaler, I lejer.',
