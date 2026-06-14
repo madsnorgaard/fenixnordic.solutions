@@ -34,7 +34,7 @@ export const en = {
   },
   services: {
     label: 'What we do',
-    heading: 'Four ways we help',
+    heading: 'How we help',
     items: [
       {
         number: '01',
@@ -55,6 +55,16 @@ export const en = {
         number: '04',
         title: 'Websites, Platforms and Integration',
         body: 'Headless CMS, Nuxt and Vue frontends, and the API integrations that make your systems talk. Fast, maintainable, and free of lock-in.',
+      },
+      {
+        number: '05',
+        title: 'Drupal Migration, Upgrades and Support',
+        body: 'Drupal is our core platform - sixteen years of it, on projects from a single site to large multi-site archives. We migrate legacy sites, run major-version upgrades, fix long-standing pain points and smooth out the daily friction your team has learned to live with, at any size of project.',
+      },
+      {
+        number: '06',
+        title: 'Continuous Maintenance',
+        body: 'Software left alone becomes a liability. We keep your stack patched, current and secure at all times - dependencies, security releases and platform updates handled as routine, so problems are prevented rather than discovered.',
       },
     ],
   },

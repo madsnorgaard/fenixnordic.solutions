@@ -34,7 +34,7 @@ export const da = {
   },
   services: {
     label: 'Hvad vi gør',
-    heading: 'Fire måder vi hjælper',
+    heading: 'Sådan hjælper vi',
     items: [
       {
         number: '01',
@@ -55,6 +55,16 @@ export const da = {
         number: '04',
         title: 'Hjemmesider, Platforme og Integration',
         body: 'Headless CMS, Nuxt- og Vue-frontends og de API-integrationer, der får jeres systemer til at tale sammen. Hurtige, vedligeholdelsesvenlige og uden låsning.',
+      },
+      {
+        number: '05',
+        title: 'Drupal-migrering, Opgraderinger og Support',
+        body: 'Drupal er vores kerneplatform - seksten år med den, på projekter fra en enkelt side til store multisite-arkiver. Vi migrerer ældre sites, kører major-opgraderinger, retter mangeårige smertepunkter og udglatter den daglige friktion, jeres team har vænnet sig til at leve med - uanset projektets størrelse.',
+      },
+      {
+        number: '06',
+        title: 'Løbende Vedligeholdelse',
+        body: 'Software, der ikke vedligeholdes, bliver hurtigt en risiko. Vi holder jeres stak opdateret, sikker og aktuel hele tiden - afhængigheder, sikkerhedsudgivelser og platformsopdateringer håndteret som rutine, så problemer forebygges frem for at blive opdaget.',
       },
     ],
   },
