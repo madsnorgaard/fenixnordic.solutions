@@ -27,7 +27,7 @@
         "drupal/pathauto": "^1.13",
         "drupal/radix": "^6.0@RC",
         "drupal/redis": "^1.0@dev",
-        "drupal/tour": "^2.0",
+        "drupal/tour": "^3.0",
         "drush/drush": "^13"
     },
     "conflict": {
