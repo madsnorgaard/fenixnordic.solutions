@@ -362,9 +362,14 @@
     <div class="reading">
       <p class="label">Se den køre</p>
       <h2>Sagsmotoren, trin for trin</h2>
-      <p>En rigtig ECA-arbejdsgang optaget mens den kører: MitID, register-opslag, afgørelse, Digital Post og GDPR-spor. Vælg en arbejdsgang og tryk afspil.</p>
+      <p>En rigtig ECA-arbejdsgang optaget mens den kører: MitID, register-opslag, afgørelse, Digital Post og GDPR-spor. Se den køre herunder, eller åbn den interaktive demo og gennemgå hvert trin.</p>
     </div>
-    <iframe class="demo-frame" src="/aabenforms-demo-da.html" title="AabenForms live arbejdsgang" loading="lazy" scrolling="no" style="width:100%;height:960px;border:0;border-radius:14px;background:#081120;display:block;margin-top:24px"></iframe>
+    <a href="/aabenforms-demo-da.html" target="_blank" rel="noopener" aria-label="Åbn den interaktive AabenForms-demo">
+      <img src="/aabenforms-merudgifter-flow.gif" alt="AabenForms merudgifter-arbejdsgang eksekverer trin for trin" loading="lazy" style="width:100%;border-radius:14px;display:block;margin-top:24px;box-shadow:0 12px 34px -14px rgba(0,0,0,.45)">
+    </a>
+    <div class="links" style="margin-top:16px">
+      <a class="btn btn-primary" href="/aabenforms-demo-da.html" target="_blank" rel="noopener">Åbn interaktiv demo</a>
+    </div>
   </div>
 </section>
 
@@ -553,9 +558,14 @@
     <div class="reading">
       <p class="label">Watch it run</p>
       <h2>The case engine, step by step</h2>
-      <p>A real ECA workflow recorded as it runs: MitID, registry lookups, a decision, Digital Post and a GDPR trace. Pick a workflow and press play.</p>
+      <p>A real ECA workflow recorded as it runs: MitID, registry lookups, a decision, Digital Post and a GDPR trace. Watch it below, or open the interactive demo to step through every node.</p>
     </div>
-    <iframe class="demo-frame" src="/aabenforms-demo-en.html" title="AabenForms live workflow" loading="lazy" scrolling="no" style="width:100%;height:960px;border:0;border-radius:14px;background:#081120;display:block;margin-top:24px"></iframe>
+    <a href="/aabenforms-demo-en.html" target="_blank" rel="noopener" aria-label="Open the interactive AabenForms demo">
+      <img src="/aabenforms-merudgifter-flow-en.gif" alt="AabenForms disability-costs workflow executing step by step" loading="lazy" style="width:100%;border-radius:14px;display:block;margin-top:24px;box-shadow:0 12px 34px -14px rgba(0,0,0,.45)">
+    </a>
+    <div class="links" style="margin-top:16px">
+      <a class="btn btn-primary" href="/aabenforms-demo-en.html" target="_blank" rel="noopener">Open interactive demo</a>
+    </div>
   </div>
 </section>
 
@@ -597,21 +607,6 @@
     }
     bda.addEventListener('click', function () { set('da'); });
     ben.addEventListener('click', function () { set('en'); });
-  })();
-</script>
-<script>
-  (function () {
-    function fit(f) {
-      try { f.style.height = f.contentWindow.document.documentElement.scrollHeight + 'px'; } catch (e) {}
-    }
-    var frames = document.querySelectorAll('iframe.demo-frame');
-    function fitAll() { frames.forEach(fit); }
-    frames.forEach(function (f) { f.addEventListener('load', function () { fit(f); }); });
-    window.addEventListener('resize', fitAll);
-    var bda = document.getElementById('btn-da'), ben = document.getElementById('btn-en');
-    if (bda) bda.addEventListener('click', function () { setTimeout(fitAll, 40); });
-    if (ben) ben.addEventListener('click', function () { setTimeout(fitAll, 40); });
-    setTimeout(fitAll, 400);
   })();
 </script>
 </body>
