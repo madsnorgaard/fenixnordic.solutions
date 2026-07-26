@@ -108,6 +108,7 @@ export const da = {
         ],
         status: 'Under aktiv udvikling, med en fungerende MitID- og Digital Post-demo. Kontakt os om et pilotprojekt.',
         link: { url: 'https://aabenforms.dk/', label: 'Besøg aabenforms.dk' },
+        secondaryLink: { url: '/aabenforms', label: 'Læs case study' },
       },
       {
         name: 'AabenIntra',
@@ -123,7 +124,7 @@ export const da = {
         ],
         status: 'Under udvikling - early access for danske og engelske virksomheder. Kontakt os for at komme med i første hold.',
         link: { url: 'https://aabenintra.fenixnordic.solutions/', label: 'Se den live demo' },
-        secondaryLink: { url: 'https://github.com/madsnorgaard/AabenIntra', label: 'Se på GitHub' },
+        secondaryLink: { url: '/aabenintra', label: 'Læs case study' },
       },
     ],
   },

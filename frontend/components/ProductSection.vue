@@ -1,6 +1,10 @@
 <script setup lang="ts">
 const t = useT()
 const { el, isVisible } = useReveal()
+
+// Case studies live on this domain, so they should not spawn a tab. Only
+// links that leave the site get target="_blank".
+const isExternal = (url: string) => /^https?:\/\//i.test(url)
 </script>
 
 <template>
@@ -27,8 +31,8 @@ const { el, isVisible } = useReveal()
                 v-if="product.link"
                 :href="product.link.url"
                 class="product-link"
-                target="_blank"
-                rel="noopener noreferrer"
+                :target="isExternal(product.link.url) ? '_blank' : undefined"
+                :rel="isExternal(product.link.url) ? 'noopener noreferrer' : undefined"
               >
                 {{ product.link.label }}
                 <span class="link-arrow" aria-hidden="true">→</span>
@@ -37,8 +41,8 @@ const { el, isVisible } = useReveal()
                 v-if="product.secondaryLink"
                 :href="product.secondaryLink.url"
                 class="product-link product-link--secondary"
-                target="_blank"
-                rel="noopener noreferrer"
+                :target="isExternal(product.secondaryLink.url) ? '_blank' : undefined"
+                :rel="isExternal(product.secondaryLink.url) ? 'noopener noreferrer' : undefined"
               >
                 {{ product.secondaryLink.label }}
                 <span class="link-arrow" aria-hidden="true">→</span>

@@ -5,6 +5,14 @@ export default defineNuxtConfig({
 
   modules: ['@nuxtjs/seo'],
 
+  // The case studies are self-contained files in public/, served by nginx via
+  // try_files. The link checker cannot resolve them to a Nuxt route, so it
+  // reports a false 404 and fails the build. They are excluded here rather
+  // than by weakening error reporting for every link on the site.
+  linkChecker: {
+    excludeLinks: ['/aabenforms', '/aabenintra'],
+  },
+
   site: {
     url: 'https://fenixnordic.solutions',
     name: 'Fenix Nordic Solutions',
@@ -82,6 +90,10 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       routes: ['/'],
+      // The case studies are self-contained files in public/, served by nginx
+      // via try_files. They are not Nuxt routes, so the link crawler must not
+      // try to prerender them or the build fails on a 404 it cannot resolve.
+      ignore: ['/aabenforms', '/aabenintra'],
     },
   },
 })
