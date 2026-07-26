@@ -357,6 +357,17 @@
   </div>
 </section>
 
+<section>
+  <div class="container">
+    <div class="reading">
+      <p class="label">Se den køre</p>
+      <h2>Sagsmotoren, trin for trin</h2>
+      <p>En rigtig ECA-arbejdsgang optaget mens den kører: MitID, register-opslag, afgørelse, Digital Post og GDPR-spor. Vælg en arbejdsgang og tryk afspil.</p>
+    </div>
+    <iframe class="demo-frame" src="/aabenforms-demo-da.html" title="AabenForms live arbejdsgang" loading="lazy" scrolling="no" style="width:100%;height:960px;border:0;border-radius:14px;background:#081120;display:block;margin-top:24px"></iframe>
+  </div>
+</section>
+
 <section class="cta">
   <div class="container">
     <h2>Klar til en POC med rigtige integrationer</h2>
@@ -537,6 +548,17 @@
   </div>
 </section>
 
+<section>
+  <div class="container">
+    <div class="reading">
+      <p class="label">Watch it run</p>
+      <h2>The case engine, step by step</h2>
+      <p>A real ECA workflow recorded as it runs: MitID, registry lookups, a decision, Digital Post and a GDPR trace. Pick a workflow and press play.</p>
+    </div>
+    <iframe class="demo-frame" src="/aabenforms-demo-en.html" title="AabenForms live workflow" loading="lazy" scrolling="no" style="width:100%;height:960px;border:0;border-radius:14px;background:#081120;display:block;margin-top:24px"></iframe>
+  </div>
+</section>
+
 <section class="cta">
   <div class="container">
     <h2>Ready for a POC with real integrations</h2>
@@ -575,6 +597,21 @@
     }
     bda.addEventListener('click', function () { set('da'); });
     ben.addEventListener('click', function () { set('en'); });
+  })();
+</script>
+<script>
+  (function () {
+    function fit(f) {
+      try { f.style.height = f.contentWindow.document.documentElement.scrollHeight + 'px'; } catch (e) {}
+    }
+    var frames = document.querySelectorAll('iframe.demo-frame');
+    function fitAll() { frames.forEach(fit); }
+    frames.forEach(function (f) { f.addEventListener('load', function () { fit(f); }); });
+    window.addEventListener('resize', fitAll);
+    var bda = document.getElementById('btn-da'), ben = document.getElementById('btn-en');
+    if (bda) bda.addEventListener('click', function () { setTimeout(fitAll, 40); });
+    if (ben) ben.addEventListener('click', function () { setTimeout(fitAll, 40); });
+    setTimeout(fitAll, 400);
   })();
 </script>
 </body>

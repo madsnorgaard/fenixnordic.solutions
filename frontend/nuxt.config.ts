@@ -1,3 +1,19 @@
+// Site Content-Security-Policy. frame-ancestors is a parameter so the
+// self-hosted AabenForms live-demo widgets (iframed same-origin from the case
+// study page) can opt into 'self' while every other route stays 'none'.
+const csp = (frameAncestors: string): string => [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://analytics.theazanianprepper.online",
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self' data:",
+  "img-src 'self' data:",
+  "connect-src 'self' https://analytics.theazanianprepper.online",
+  `frame-ancestors ${frameAncestors}`,
+  "base-uri 'self'",
+  "form-action 'self'",
+  "upgrade-insecure-requests",
+].join('; ')
+
 export default defineNuxtConfig({
   devtools: { enabled: false },
   ssr: true,
@@ -70,20 +86,14 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/**': {
-      headers: {
-        'Content-Security-Policy': [
-          "default-src 'self'",
-          "script-src 'self' 'unsafe-inline' https://analytics.theazanianprepper.online",
-          "style-src 'self' 'unsafe-inline'",
-          "font-src 'self' data:",
-          "img-src 'self' data:",
-          "connect-src 'self' https://analytics.theazanianprepper.online",
-          "frame-ancestors 'none'",
-          "base-uri 'self'",
-          "form-action 'self'",
-          "upgrade-insecure-requests",
-        ].join('; '),
-      },
+      headers: { 'Content-Security-Policy': csp("'none'") },
+    },
+    // Same-origin iframe embeds on the AabenForms case study page.
+    '/aabenforms-demo-da.html': {
+      headers: { 'Content-Security-Policy': csp("'self'") },
+    },
+    '/aabenforms-demo-en.html': {
+      headers: { 'Content-Security-Policy': csp("'self'") },
     },
   },
 
