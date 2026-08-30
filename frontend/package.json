@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
-    "@fontsource/dm-sans": "^5.2.8",
-    "@nuxtjs/seo": "^5.3.2",
+    "@fontsource/dm-sans": "^5.3.0",
+    "@nuxtjs/seo": "^5.3.3",
     "nuxt": "^3.21.8",
-    "vue": "^3.5.39"
+    "vue": "^3.5.40"
   }
 }
