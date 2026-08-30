@@ -1,6 +1,10 @@
 <script setup lang="ts">
 const t = useT()
 const { el, isVisible } = useReveal()
+
+// Case studies live on this domain, so they should not spawn a tab. Only
+// links that leave the site get target="_blank".
+const isExternal = (url: string) => /^https?:\/\//i.test(url)
 </script>
 
 <template>
@@ -22,16 +26,28 @@ const { el, isVisible } = useReveal()
               <span class="status-dot" aria-hidden="true" />
               {{ product.status }}
             </p>
-            <a
-              v-if="product.link"
-              :href="product.link.url"
-              class="product-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {{ product.link.label }}
-              <span class="link-arrow" aria-hidden="true">→</span>
-            </a>
+            <div v-if="product.link || product.secondaryLink" class="product-links">
+              <a
+                v-if="product.link"
+                :href="product.link.url"
+                class="product-link"
+                :target="isExternal(product.link.url) ? '_blank' : undefined"
+                :rel="isExternal(product.link.url) ? 'noopener noreferrer' : undefined"
+              >
+                {{ product.link.label }}
+                <span class="link-arrow" aria-hidden="true">→</span>
+              </a>
+              <a
+                v-if="product.secondaryLink"
+                :href="product.secondaryLink.url"
+                class="product-link product-link--secondary"
+                :target="isExternal(product.secondaryLink.url) ? '_blank' : undefined"
+                :rel="isExternal(product.secondaryLink.url) ? 'noopener noreferrer' : undefined"
+              >
+                {{ product.secondaryLink.label }}
+                <span class="link-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
           </div>
 
           <ul class="product-points">
@@ -137,11 +153,18 @@ const { el, isVisible } = useReveal()
   animation: status-pulse 2.5s ease-in-out infinite;
 }
 
+.product-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  margin-top: 1.5rem;
+}
+
 .product-link {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 1.5rem;
   font-family: var(--font-body);
   font-size: 0.8125rem;
   font-weight: 500;
@@ -150,6 +173,12 @@ const { el, isVisible } = useReveal()
   transition: color 0.2s ease;
 }
 .product-link:hover { color: var(--accent-light); }
+
+.product-link--secondary {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+.product-link--secondary:hover { color: var(--text); }
 
 .link-arrow {
   font-size: 0.875rem;
