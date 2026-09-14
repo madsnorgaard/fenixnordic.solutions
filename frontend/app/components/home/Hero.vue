@@ -6,6 +6,9 @@ const localePath = useLocalePath()
 <template>
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__pin frame">
+      <ClientOnly>
+        <HeroParticles />
+      </ClientOnly>
       <div class="hero__mark">
         <PhoenixMark variant="line" />
       </div>

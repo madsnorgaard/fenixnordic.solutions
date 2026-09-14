@@ -35,6 +35,9 @@ export default defineNuxtConfig({
     experimental: {
       nativeSqlite: true,
     },
+    renderer: {
+      anchorLinks: false,
+    },
   },
 
   site: {

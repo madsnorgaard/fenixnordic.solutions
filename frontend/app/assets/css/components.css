@@ -23,6 +23,7 @@
 }
 
 .button--quiet {
+  min-height: 44px;
   padding-inline: 0;
   color: var(--bone);
   text-decoration-line: underline;
@@ -61,6 +62,7 @@
 .header__brand {
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
   gap: var(--s-3);
   text-decoration: none;
   font-weight: 600;
@@ -74,13 +76,25 @@
 .header__nav {
   display: flex;
   align-items: center;
-  gap: var(--s-5);
+  gap: var(--s-4);
   font-size: var(--text-meta);
+}
+
+.header__nav > a,
+.locale a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: var(--s-2);
+}
+
+.header__nav > a {
+  margin-right: calc(-1 * var(--s-2));
 }
 
 .locale {
   display: inline-flex;
-  gap: var(--s-3);
+  gap: var(--s-1);
 }
 
 .locale a {
@@ -130,6 +144,9 @@
 
 .footer__mark {
   display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
   color: var(--ash);
 }
 
@@ -143,6 +160,8 @@
 }
 
 .hero__pin {
+  position: relative;
+  overflow: hidden;
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   gap: var(--gutter);
@@ -152,8 +171,23 @@
 }
 
 .hero__mark {
+  position: relative;
+  z-index: 1;
   color: var(--ember);
   view-transition-name: phoenix;
+}
+
+.hero__text {
+  position: relative;
+  z-index: 1;
+}
+
+/* The ember field behind the hero. The canvas draws itself; this only places it. */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .hero__mark svg {
@@ -521,9 +555,33 @@
   margin-block: var(--s-4);
 }
 
+/* A running note shares its row with the heading it introduces, so it
+   carries the same top margin and lands level with it. */
+.prose > .margin-note--cool {
+  margin-top: var(--s-8);
+}
+
+.prose > .margin-note:first-child {
+  margin-top: 0;
+}
+
+@media (max-width: 899px) {
+  .prose > .margin-note--cool {
+    margin-top: var(--s-7);
+  }
+
+  .prose > .margin-note + h2 {
+    margin-top: var(--s-3);
+  }
+
+  .prose > h2 {
+    margin-top: var(--s-7);
+  }
+}
+
 /* Case study page */
 .case__hero {
-  padding-block: var(--s-8) var(--s-7);
+  padding-block: clamp(2.5rem, 8vw, 4.5rem) var(--s-7);
   display: grid;
   gap: var(--s-5);
 }
@@ -551,6 +609,20 @@
 .case__spine {
   display: grid;
   gap: var(--s-2);
+}
+
+.case__spine a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: calc(-1 * var(--s-2));
+}
+
+@media (max-width: 899px) {
+  .case__spine {
+    position: static;
+    padding-block: 0 var(--s-4);
+  }
 }
 
 .case__product {
@@ -673,5 +745,8 @@ textarea.field__input {
 }
 
 .contact-lines a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--bone);
 }
