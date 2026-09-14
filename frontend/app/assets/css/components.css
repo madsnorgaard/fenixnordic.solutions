@@ -221,13 +221,14 @@
 }
 
 /* The line variant of the mark. At rest it is fully drawn and fully ignited.
-   Dash lengths are in user units because pathLength normalises each path to 1. */
+   pathLength normalises each path to 1, and in SVG a CSS px is one user unit,
+   so a 1px dash is the whole path. Unitless values are not accepted in keyframes. */
 .mark--line .mark__ring,
 .mark--line .mark__body {
   stroke-width: 3;
   stroke-linejoin: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 0;
+  stroke-dasharray: 1px;
+  stroke-dashoffset: 0px;
 }
 
 .mark--line .mark__fill {
@@ -235,8 +236,8 @@
 }
 
 @keyframes mark-draw {
-  from { stroke-dashoffset: 1; }
-  to { stroke-dashoffset: 0; }
+  from { stroke-dashoffset: 1px; }
+  to { stroke-dashoffset: 0px; }
 }
 
 @keyframes mark-heat {
@@ -268,14 +269,19 @@
       top: var(--header-h);
     }
 
+    /* animation-duration must be auto for a scroll timeline. The shorthand
+       defaults it to 0s once the minifier expands it, which freezes the
+       animation at its end, so it is set explicitly. */
     .hero__mark .mark__body {
       animation: mark-draw linear both, mark-heat linear both;
+      animation-duration: auto, auto;
       animation-timeline: scroll(root);
       animation-range: 0 55svh, 20svh 65svh;
     }
 
     .hero__mark .mark__fill {
       animation: mark-fill linear both;
+      animation-duration: auto;
       animation-timeline: scroll(root);
       animation-range: 50svh 68svh;
     }
