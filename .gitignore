@@ -91,3 +91,6 @@ data/drupal/web/sites/*/private
 *.sql
 /sql
 *.sql.gz
+
+.jumbo/
+.jumbo/jumbo.db
