@@ -1,12 +1,13 @@
-# Stage 1: Build
-FROM node:22-alpine AS builder
+# Stage 1: build the static site
+FROM node:24-alpine AS builder
 WORKDIR /app
+ENV NUXT_TELEMETRY_DISABLED=1
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY . .
 RUN npm run generate
 
-# Stage 2: Serve with nginx
+# Stage 2: serve it with nginx
 FROM nginx:alpine
 COPY --from=builder /app/.output/public /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf

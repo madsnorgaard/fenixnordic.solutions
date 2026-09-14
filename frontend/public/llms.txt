@@ -1,30 +1,36 @@
 # Fenix Nordic Solutions
 
-> Digital delivery for ambitious businesses. Open source technology, AI-assisted workflows, and acceptance criteria agreed before work begins. Based in Skanderborg, Denmark.
+> Open source systems for Danish municipalities and Nordic teams: hosted in Europe, owned outright, priced for the work rather than the licence. Based in Skanderborg, Denmark, delivering anywhere.
 
-## About
+## What we do
 
-Fenix Nordic Solutions is a digital consultancy based in Skanderborg, Denmark. The company delivers web development, DevOps, and infrastructure services using open-source technology. Every project starts with agreed acceptance criteria before work begins, ensuring transparent delivery and predictable outcomes.
+- IT cost and licence audit: what to cut, replace or right-size, with the savings attached
+- Off-cloud migration to your own servers or a European VPS, under EU jurisdiction
+- Custom open source solutions when an expensive tool only solves part of the problem
+- Websites, platforms and integration: headless CMS, Nuxt and Vue, API integration
+- Drupal migration, upgrades and support: sixteen years, from single sites to large archives
+- Continuous maintenance: dependencies, security releases and platform updates as routine
 
-## Services
+## Products
 
-- Web development (Drupal, WordPress, Nuxt/Vue, PHP, Node.js)
-- DevOps and infrastructure (Docker, Linux, CI/CD, self-hosted servers)
-- AI-assisted development workflows
-- Technical consulting and architecture
+- AabenForms (https://aabenforms.dk, case study at https://fenixnordic.solutions/aabenforms): open source platform for municipal self-service and case workflows. MitID and NemLog-in, Digital Post (SF1601), CPR and CVR lookups (SF1520, SF1530, SF6006), journalising (SF1470), distribution (SF2900), ESDH connectors for GetOrganized, SBSYS, WorkZone and Acadre. Drupal 11 and Nuxt. GPL. Pre-pilot proof of concept: the engine is real, certificates and a pilot municipality are missing.
+- AabenIntra (https://aabenintra.fenixnordic.solutions, case study at https://fenixnordic.solutions/aabenintra): open source intranet on Drupal 11 for municipalities and organisations. Personal dashboard, targeted news, directory with organisational structure, recognition wall, mandatory reading with receipts. Danish and English. From 7,500 DKK a month including hosting and maintenance. Proof of concept with a public demo.
 
-## Approach
+## Cases
 
-- Open-source first: no vendor lock-in
-- Acceptance criteria agreed upfront
-- AI-assisted workflows for efficiency
-- Transparent pricing and delivery
+- South African History Online (https://www.sahistory.org.za): one of the largest free history archives on the continent. Technical lead since 2010, digital transformation ongoing. Drupal, self-hosted, no paygate.
 
-## Location
+## People
 
-Skanderborg, Denmark
+- Phoenix: delivery and digital transformation, fifteen years international experience, SCRUM certified
+- Mads: senior developer and DevOps engineer, fifteen years of Drupal, PHP, Docker and Linux
+
+## Languages
+
+English at https://fenixnordic.solutions, Danish at https://fenixnordic.solutions/da
 
 ## Contact
 
 - Website: https://fenixnordic.solutions
-- Email: Available via website contact form
+- Email and phone: see the contact section on the website
+- CVR 45019608, Denmark

@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <TheCursor />
+  <NuxtLayout>
     <NuxtPage />
-    <div class="grain" aria-hidden="true" />
-  </div>
+  </NuxtLayout>
 </template>

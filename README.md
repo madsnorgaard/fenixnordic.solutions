@@ -1,145 +1,153 @@
-[![Deploy to Production](https://github.com/madsnorgaard/fenixnordic.solutions/actions/workflows/deploy.yml/badge.svg)](https://github.com/madsnorgaard/fenixnordic.solutions/actions/workflows/deploy.yml)
+[![Build and deploy](https://github.com/madsnorgaard/fenixnordic.solutions/actions/workflows/ci.yml/badge.svg)](https://github.com/madsnorgaard/fenixnordic.solutions/actions/workflows/ci.yml)
 
 # fenixnordic.solutions
 
-Marketing site for Fenix Nordic Solutions. Bilingual EN/DA, dark Nordic editorial design.
+Marketing site for Fenix Nordic Solutions. Bilingual, English at `/` and Danish at `/da`.
 
-**Stack**: Nuxt 3 (static generate) · nginx:alpine · Docker · Traefik TLS
+**Stack**: Nuxt 4 (static generate), Nuxt Content, Nuxt i18n, Nuxt SEO, nginx:alpine, Docker, Traefik TLS.
 
----
+Project memory, decisions, guidelines and the goal backlog live in Jumbo (`jumbo session start`). `AGENTS.md` and `CLAUDE.md` are the pointer stubs Jumbo writes; do not add instructions to them.
 
 ## Local development
+
+Node 24.11 or newer is required.
 
 ```bash
 cd frontend/
 npm install
-npm run dev -- --port 3030
-# → http://localhost:3030
+npm run dev
 ```
 
-To preview the production static build:
+Production build and a local preview of the static output:
 
 ```bash
 npm run generate
 npx serve .output/public
 ```
 
----
+The real production path is nginx serving the generated files. Verify routing in the container before shipping:
+
+```bash
+docker build -t fenix-site frontend/
+docker run --rm -p 8080:80 fenix-site
+curl -I http://localhost:8080/aabenforms
+```
+
+## Quality gates
+
+```bash
+npm run lint        # eslint
+npm run typecheck   # vue-tsc through nuxt
+npm run check:copy  # no em dashes, EN and DA parity, message syntax
+npm run generate    # prerender with the link checker
+```
+
+All four run in CI on every pull request and on main before the deploy is dispatched.
 
 ## Project structure
 
 ```
 frontend/
-  app.vue                   Root layout (TheCursor + NuxtPage + grain overlay)
-  pages/index.vue           Page composition (section order)
-  components/
-    TheNav.vue              Fixed nav, scroll opacity, lang toggle
-    HeroSection.vue         Full-viewport hero, 3-line headline
-    HowWeWorkSection.vue    Define / Build / Deliver process steps
-    ServicesSection.vue     2×2 capability grid
-    AboutSection.vue        Phoenix profile + stats column
-    ContactSection.vue      mailto form + contact details
-    TheFooter.vue           One-line footer
-    TheCursor.vue           Custom ember cursor + click sparks
-  composables/
-    useLocale.ts            EN/DA state via useState, persists to localStorage
-    useT.ts                 Returns typed i18n object for current locale
-    useReveal.ts            IntersectionObserver scroll reveal
-    useMagnetic.ts          Magnetic pull effect for CTA buttons
-  i18n/
-    en.ts                   All English strings
-    da.ts                   All Danish strings
-  assets/css/main.css       Design system: variables, reset, animations, buttons
-  public/favicon.svg        Ember circle SVG
-  Dockerfile                node:22-alpine build → nginx:alpine serve
-  nginx.conf                SPA fallback, gzip, 1y cache for assets
+  app/
+    app.vue                    Layout wrapper
+    layouts/default.vue        Skip link, header, main, footer, hreflang
+    pages/index.vue            Front page
+    pages/[slug].vue           Case studies from content/
+    error.vue                  404 and other errors
+    components/
+      PhoenixMark.vue          The mark, solid or as strokes that draw in
+      SiteHeader.vue           Brand, language switch, contact link
+      SiteFooter.vue
+      SiteSection.vue          A section with a sticky running head in the spine
+      AppButton.vue            Primary and quiet buttons, link or button
+      LocaleSwitch.vue
+      SkipLink.vue
+      home/                    Front page sections
+      content/                 Components usable in markdown and in Vue
+      OgImage/                 Social card templates
+    composables/useCopy.ts     Typed access to a branch of the locale dictionary
+    plugins/legacy-locale.client.ts   Sends visitors with the old stored language to /da
+    utils/site.ts              Contact details and external addresses
+    assets/css/                Layered stylesheet: reset, tokens, base, layout, components, utilities
+  content/en/*.md              Case studies, English
+  content/da/*.md              Case studies, Danish
+  i18n/locales/en.ts           Front page and chrome copy, English
+  i18n/locales/da.ts           Front page and chrome copy, Danish
+  public/fonts/                Bricolage Grotesque, self-hosted
+  public/media/                Screenshots (1x and 2x WebP) and flow recordings (WebM, MP4, poster)
+  public/aabenforms-demo-*.html   Interactive demo widgets, standalone
+  media-src/                   GIF masters for the flow recordings
+  scripts/                     Media extraction, video conversion, copy check
+  nuxt.config.ts
+  content.config.ts
+  Dockerfile                   node:24-alpine build, nginx:alpine serve
+  nginx.conf
 ```
 
----
+## Editing content
 
-## Content updates
+Front page copy: `i18n/locales/en.ts` and `i18n/locales/da.ts`. Both files must have the same keys. Contact details are in `app/utils/site.ts`.
 
-All copy lives in `frontend/i18n/en.ts` and `frontend/i18n/da.ts`.
+Case studies: `content/en/<slug>.md` and `content/da/<slug>.md`. The frontmatter carries the title, kicker, lede, fact sentence, call to action and footnote. The body uses these components:
 
-Keys: `hero`, `how` (process steps), `services`, `about`, `contact`, `footer`.
+```md
+::margin-note{term="Honest status"}
+A qualification that hangs in the margin next to what follows.
+::
 
-After editing: commit and push — the deploy pipeline handles the rest.
+::rows
+:::row{term="Term"}
+Definition.
+:::
+::
 
-No em dashes anywhere in copy.
+::status-list
+:::status-item{state="done" label="Built"}
+What is built.
+:::
+::
 
----
+::case-figure{src="/media/x/y.webp" src2x="/media/x/y@2x.webp" width="960" height="667" alt="..."}
+Caption.
+::
+
+::flow-video{name="aabenforms-skoleskift-en" width="1440" height="900" alt="..." demo="/aabenforms-demo-en.html"}
+Caption.
+::
+```
+
+Rules: no em dashes anywhere. No `@`, `|`, `{` or `}` inside locale messages. Every string exists in both languages.
+
+## Media
+
+New screenshots: place a WebP at 1x (960 wide) and 2x under `public/media/<product>/`. The extraction script that produced the current set from the old static pages is `scripts/extract-case-media.mjs`.
+
+New flow recordings: drop a GIF in `media-src/` and run `npm run media:flows`. It writes WebM, MP4 and a poster to `public/media/flows/`.
 
 ## Design system
 
-| Variable | Value | Use |
-|----------|-------|-----|
-| `--bg` | `#0b0b10` | Page background |
-| `--surface` | `#111119` | Card backgrounds |
-| `--border` | `#1c1c2a` | All borders |
-| `--text` | `#f2ece0` | Body text |
-| `--text-muted` | `#7a7585` | Secondary text |
-| `--accent` | `#c4622a` | Ember / CTA colour |
-| `--font-display` | Cormorant Garamond | Headings |
-| `--font-body` | DM Sans | Body, UI |
-
-Fonts loaded via Google Fonts in `nuxt.config.ts`.
-
----
+Tokens live in `app/assets/css/tokens.css`. Two colour poles on a warm black: ember (hot) and ash (cold). One typeface, Bricolage Grotesque, with weight, width and optical size axes. The only animation is the phoenix mark drawing in and igniting on scroll on the front page; everything honours `prefers-reduced-motion`.
 
 ## Deploy pipeline
 
-Push to `main` triggers GitHub Actions (`.github/workflows/deploy.yml`), which fires a
-`repository_dispatch` event to `madsnorgaard/contabo-infrastructure`.
+Push to `main` triggers `.github/workflows/ci.yml`: lint, typecheck, copy check, generate, output assertions and a container smoke test. When that passes on main, it dispatches a `deploy` event to `madsnorgaard/contabo-infrastructure`, whose self-hosted runner rsyncs `docker-compose.yml` and `frontend/` to VPS2 and runs `docker compose build nuxt` and `docker compose up -d --remove-orphans`.
 
-The infrastructure runner (self-hosted on VPS1):
-1. Checks out this repo
-2. Rsyncs `docker-compose.yml` + `frontend/` to VPS2 at `~/docker/fenixnordic.solutions/`
-3. Runs `docker compose build nuxt` on VPS2
-4. Runs `docker compose up -d --remove-orphans`
-
-VPS2 does not need GitHub SSH access — all files are pushed from the runner.
-
-**Why `npm install` not `npm ci`**: dependency tree has conflicting commander version
-ranges across transitive deps; `npm ci` rejects the lockfile. `npm install` resolves it.
-
----
+Rollback: the state before the 2026 redesign is tagged `pre-redesign`. Revert main to it and push; nothing on the VPS holds state.
 
 ## Docker services
 
 | Service | Container | Purpose |
 |---------|-----------|---------|
 | `nuxt` | `fenix_nuxt` | Static site via nginx, Traefik-routed to fenixnordic.solutions |
+| `mailer` | `fenix_mailer` | PHP relay for the contact form at `/api/contact` |
 | `fenix_db` | `fenix_db` | MariaDB 11, internal only |
 | `phpmyadmin` | `fenix_db_admin` | DB admin at phpmyadmin.fenixnordic.solutions |
 | `fenix_redis` | `fenix_redis` | Redis, internal only |
-| `fenix_solr` | `fenix_solr` | Solr 8.11, internal only (no host port — conflicts with madsnorgaard_solr) |
+| `fenix_solr` | `fenix_solr` | Solr 8.11, internal only |
 
-Database and Solr are retained for a future headless CMS integration.
+Security headers, including the CSP, are set by Traefik in `docker-compose.yml`. Do not add them in nginx or in `nuxt.config.ts`.
 
----
+## Known issues
 
-## Maintenance
-
-**Rebuild and restart the site container on VPS2:**
-```bash
-cd ~/docker/fenixnordic.solutions
-docker compose build nuxt
-docker compose up -d nuxt
-```
-
-**Check container status:**
-```bash
-docker compose ps
-docker compose logs nuxt --tail 30
-```
-
-**Force full redeploy** via GitHub Actions → Deploy to Production → Run workflow → check "Force recreate containers".
-
----
-
-## Known issues / gotchas
-
-- `fenix_solr` must not expose port 8983 on the host — `madsnorgaard_solr` already owns it.
-  The port binding is intentionally absent from `docker-compose.yml`.
-- Old Drupal artefacts (`web/`, `composer.json`, `settings.php`, etc.) remain in the repo root
-  — they are not used by the Nuxt site and can be cleaned up in a future housekeeping pass.
+- `fenix_solr` must not expose port 8983 on the host; `madsnorgaard_solr` owns it.
+- Old Drupal artefacts (`web/`, `composer.json`, `settings.php`) remain in the repo root and are unused by the site.

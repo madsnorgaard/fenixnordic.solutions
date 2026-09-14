@@ -1,41 +1,60 @@
+const SITE_URL = 'https://fenixnordic.solutions'
+const SITE_NAME = 'Fenix Nordic Solutions'
+const SITE_DESCRIPTION
+  = 'Open source systems for Danish municipalities and Nordic teams, hosted in Europe and owned outright. '
+    + 'IT cost audits, off-cloud migration, custom builds, and the AabenForms and AabenIntra platforms. Based in Skanderborg, Denmark.'
+
 export default defineNuxtConfig({
+  compatibilityDate: '2026-09-01',
   devtools: { enabled: false },
   ssr: true,
+
+  modules: ['@nuxt/eslint', '@nuxtjs/i18n', '@nuxt/content', '@nuxtjs/seo'],
+
   css: ['~/assets/css/main.css'],
 
-  modules: ['@nuxtjs/seo'],
+  experimental: {
+    viewTransition: true,
+  },
 
-  // The case studies are self-contained files in public/, served by nginx via
-  // try_files. The link checker cannot resolve them to a Nuxt route, so it
-  // reports a false 404 and fails the build. They are excluded here rather
-  // than by weakening error reporting for every link on the site.
-  linkChecker: {
-    excludeLinks: ['/aabenforms', '/aabenintra'],
+  i18n: {
+    baseUrl: SITE_URL,
+    defaultLocale: 'en',
+    strategy: 'prefix_except_default',
+    detectBrowserLanguage: false,
+    locales: [
+      { code: 'en', language: 'en', file: 'en.ts', name: 'English' },
+      { code: 'da', language: 'da-DK', file: 'da.ts', name: 'Dansk' },
+    ],
+    experimental: {
+      typedOptionsAndMessages: 'default',
+    },
+  },
+
+  content: {
+    experimental: {
+      nativeSqlite: true,
+    },
   },
 
   site: {
-    url: 'https://fenixnordic.solutions',
-    name: 'Fenix Nordic Solutions',
-    description: 'We help small and medium businesses cut cloud and licence costs by moving onto European hosting and open source tools they own. IT audits, off-cloud migration, custom software, and the AabenForms and AabenIntra platforms. Based in Skanderborg, Denmark.',
+    url: SITE_URL,
+    name: SITE_NAME,
+    description: SITE_DESCRIPTION,
     defaultLocale: 'en',
   },
 
   robots: {
-    groups: [
-      {
-        userAgent: '*',
-        allow: '/',
-      },
-    ],
+    groups: [{ userAgent: '*', allow: '/' }],
   },
 
   schemaOrg: {
     identity: {
       type: 'Organization',
-      name: 'Fenix Nordic Solutions',
-      url: 'https://fenixnordic.solutions',
-      logo: 'https://fenixnordic.solutions/favicon.svg',
-      description: 'We help small and medium businesses cut cloud and licence costs by moving onto European hosting and open source tools they own. IT audits, off-cloud migration, custom software, and the AabenForms and AabenIntra platforms.',
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: `${SITE_URL}/favicon.svg`,
+      description: SITE_DESCRIPTION,
       address: {
         type: 'PostalAddress',
         addressLocality: 'Skanderborg',
@@ -46,54 +65,38 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Fenix Nordic Solutions',
-      htmlAttrs: { lang: 'en' },
+      titleTemplate: '%s',
       meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'theme-color', content: '#0b0b10' },
+        { name: 'theme-color', content: '#0f0d0b' },
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        {
+          rel: 'preload',
+          as: 'font',
+          type: 'font/woff2',
+          href: '/fonts/bricolage-grotesque-latin.woff2',
+          crossorigin: 'anonymous',
+        },
       ],
       script: [
         {
-          defer: true,
+          'defer': true,
           'data-domain': 'fenixnordic.solutions',
-          src: 'https://analytics.theazanianprepper.online/js/script.file-downloads.hash.outbound-links.js',
+          'src': 'https://analytics.theazanianprepper.online/js/script.file-downloads.hash.outbound-links.js',
         },
         {
-          innerHTML: "window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }",
+          innerHTML: 'window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }',
         },
       ],
-    },
-  },
-  routeRules: {
-    '/**': {
-      headers: {
-        'Content-Security-Policy': [
-          "default-src 'self'",
-          "script-src 'self' 'unsafe-inline' https://analytics.theazanianprepper.online",
-          "style-src 'self' 'unsafe-inline'",
-          "font-src 'self' data:",
-          "img-src 'self' data:",
-          "connect-src 'self' https://analytics.theazanianprepper.online",
-          "frame-ancestors 'none'",
-          "base-uri 'self'",
-          "form-action 'self'",
-          "upgrade-insecure-requests",
-        ].join('; '),
-      },
     },
   },
 
   nitro: {
     prerender: {
-      routes: ['/'],
-      // The case studies are self-contained files in public/, served by nginx
-      // via try_files. They are not Nuxt routes, so the link crawler must not
-      // try to prerender them or the build fails on a 404 it cannot resolve.
-      ignore: ['/aabenforms', '/aabenintra'],
+      routes: ['/', '/da', '/aabenforms', '/aabenintra', '/da/aabenforms', '/da/aabenintra'],
+      crawlLinks: true,
+      autoSubfolderIndex: false,
     },
   },
 })
