@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.0.0",
-    "@takumi-rs/core": "^2.13.7",
+    "@takumi-rs/core": "^2.14.0",
     "eslint": "^9.0.0",
     "ffmpeg-static": "^5.0.0",
     "sharp": "^0.35.4",
