@@ -19,7 +19,7 @@
     "media:flows": "node scripts/convert-flows.mjs"
   },
   "dependencies": {
-    "@nuxt/content": "^3.16.0",
+    "@nuxt/content": "^3.16.1",
     "@nuxt/fonts": "^0.14.0",
     "@nuxtjs/i18n": "^10.6.0",
     "@nuxtjs/seo": "^5.3.16",
