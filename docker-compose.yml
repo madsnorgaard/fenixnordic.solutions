@@ -81,13 +81,3 @@ services:
       driver: "json-file"
       options:
         max-size: "50m"
-
-  fenix_solr:
-    image: solr:8.11.2
-    container_name: fenix_solr
-    volumes:
-      - ./data/solr:/var/solr
-      - ./solr/fenix:/opt/solr/server/solr/fenix
-    restart: unless-stopped
-    networks:
-      - internal
