@@ -24,7 +24,7 @@
     "@nuxtjs/i18n": "^10.6.0",
     "@nuxtjs/seo": "^5.3.16",
     "nuxt": "^4.6.4",
-    "vue": "^3.5.43"
+    "vue": "^3.5.45"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.0.0",
