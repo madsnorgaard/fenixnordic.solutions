@@ -1,4 +1,4 @@
-FROM php:8.5-apache
+FROM php:8.6-apache
 # APCu is built from the GitHub release tarball instead of `pecl install`:
 # pecl.php.net answered HTTP 500 during the 21 Oct 2026 PHP security release
 # and the image must not depend on it. docker-php-ext-install handles
